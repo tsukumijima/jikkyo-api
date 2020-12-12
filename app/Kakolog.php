@@ -28,7 +28,9 @@ class Kakolog extends Model
      * @return string XML にフォーマットした過去ログデータ
      */
     public static function formatToXML(string $kakolog_raw) {
-        //
+
+        // XML のヘッダをつけてるだけなので Valid な XML かは微妙（たまに壊れてるのとかあるし）
+        return "<?xml version='1.0' encoding='UTF-8'?>\n<packet>\n${kakolog_raw}\n</packet>";
     }
     
 
@@ -39,6 +41,14 @@ class Kakolog extends Model
      * @return string JSON にフォーマットした過去ログデータ
      */
     public static function formatToJSON(string $kakolog_raw) {
-        //
+        
+        // まずは XML に直す
+        $kakolog_xml = Kakolog::formatToXML($kakolog_raw);
+
+        // XML オブジェクトとして読み込む
+        $kakolog_xmlobject = simplexml_load_string($kakolog_xml);
+
+        // json_encode() で JSON にフォーマット
+        return json_encode($kakolog_xmlobject, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); 
     }
 }
