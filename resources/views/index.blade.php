@@ -11,8 +11,8 @@
 
   <!-- OGP -->
   <meta property="og:type" content="article">
-  <meta property="description" content="ニコニコ実況の過去ログを xml や json データで返す非公式 API です。">
-  <meta property="og:description" content="ニコニコ実況の過去ログを xml や json データで返す非公式 API です。">
+  <meta property="description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
+  <meta property="og:description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta property="og:title" content="ニコニコ実況 過去ログ API">
   <meta property="og:image" content="{{ url('/') }}/logo.png">
   <meta property="og:locale" content="ja_JP">
@@ -20,7 +20,7 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:description" content="ニコニコ実況の過去ログを xml や json データで返す非公式 API です。">
+  <meta name="twitter:description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta name="twitter:title" content="ニコニコ実況 過去ログ API">
   <meta name="twitter:image" content="{{ url('/') }}/logo.png">
   <!-- /Twitter Card -->
@@ -28,6 +28,7 @@
   <!-- JavaScript -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{{ url('/') }}/script.js"></script>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -80,8 +81,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#changes-notes">
-              <i class="fas fa-exclamation-circle"></i>Changes Notes
+            <a class="nav-link text-light" href="#notes">
+              <i class="fas fa-exclamation-circle"></i>Notes
             </a>
           </li>
           <li class="nav-item">
@@ -95,8 +96,13 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link text-light" href="#xml-data-sample">
+              <i class="fas fa-code"></i>XML Data Sample
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link text-light" href="#json-data-sample">
-              <i class="fas fa-code"></i>Json Data Sample
+              <i class="fas fa-code"></i>JSON Data Sample
             </a>
           </li>
         </ul>
@@ -109,50 +115,23 @@
       <h2 class="card-header font-weight-bold"><i class="fas fa-info-circle"></i>About</h2>
       <div class="card-body p-sm-4">
 
-        <p>ニコニコ実況 過去ログ APIは、ニコニコ実況の過去ログを xml や json データで提供しています。</p>
-        <p>去る 2020 年 7 月、<a href="https://help.livedoor.com/weather/index.html" target="_blank">livedoor 天気がサービス終了となりました。</a>livedoor 天気の API はわかりやすく、認証も不要でとても利用しやすかったのですが、突然の終了となりとても残念です。<br>代替として使えそうな API を探しましたが、OpenWeatherMap は API キーが必要な上に予報自体が正確でなかったり、気象庁のサイトはそもそも API がなかったりなど livedoor 天気のように手軽に使える API は見つからず、こうして自作することとなりました。</p>
-        <p class="mb-0">この API は、<a href="https://www.jma.go.jp/jma/index.html" target="_blank">気象庁</a> から配信されている全国各地の天気予報を取得し、終了した livedoor 天気 の API と互換性のある json 形式のデータで提供するものです。URL を差し替えるだけで極力既存のコードをいじることなく利用できるようにしているつもりですが、<span class="text-danger font-weight-bold">livedoor 天気の API からの変更点や注意点もあります。</span>利用される際は下記の 変更点・注意事項 をよく読んだ上でご利用ください。</p>
-
+        <p>ニコニコ実況 過去ログ APIは、ニコニコ実況の過去ログを XML や JSON データで提供する非公式 API です。</p>
+        <p class="mb-0">（準備中）</p>
+        
       </div>
     </div>
   </div>
 
-  <div id="changes-notes" class="container mt-4 px-2 px-lg-3">
+  <div id="notes" class="container mt-4 px-2 px-lg-3">
     <div class="card">
-      <h2 class="card-header font-weight-bold"><i class="fas fa-exclamation-circle"></i>変更点・注意事項</h2>
+      <h2 class="card-header font-weight-bold"><i class="fas fa-exclamation-circle"></i>注意事項</h2>
       <div class="card-body p-sm-4">
 
         <ul class="mb-0">
-          <li>天気予報は気象庁のサイトをスクレイピングして取得しているため、<span class="text-danger">もし取得元のページに予期しないデータが入っていた場合や HTML の構造が大幅に変わった場合などに、500 エラーで取得できなくなる可能性があります。</span></li>
-          <ul>
-            <li>万全は期しているつもりですが、アクセスする時間によってデータが変わるため、修正できていない不具合があるかもしれません。</li>
-            <li>サービスの利用は無料ですが、この API を利用したことで何らかの不具合が発生しても責任は負えません。自己責任にてお願いします。</li>
-            <li>このため、<u>天気を「確実に」取得する必要がある用途での利用は推奨しません。</u>有料サービスなども検討してください。</li>
-          </ul>
-          <li>API は HTTP 接続と HTTPS 接続両方に対応していますが、<span class="text-info">できるだけ HTTPS でアクセスすることを推奨します</span>（証明書云々など HTTPS 接続が難しい環境向けに一応残しています）。</li>
-          <li>ピンポイント予報の発表地点を表す pinpointLocations は気象庁 HP からは取得できないため、廃止としました。</li>
-          <li>link はリクエストされたデータの地域に該当する気象庁 HP 天気予報のデータ取得元 URL を返すようになりました。</li>
-          <li>copyright 内の項目は現状に合わせて変更しています。provider は気象庁としていますが、非公式です。</li>
-          <ul>
-            <li>API のレスポンス内 ( copyright → provider → note ) に JSON データへ編集している旨を明記しています。</li>
-          </ul>
-          <li>気象庁から配信されているデータの関係上、<span class="text-danger">明後日の最高気温、最低気温は取得できません</span>（ null になります）。また、今日の最低気温も取得できないようです。</li>
-          <ul>
-            <li>時間帯によっては明後日の天気が予報ごと取得できないこともあります。取得できない場合も考慮して実装してください。</li>
-            <li>天気が取得できなかった場合は天気アイコンのタイトル・URL も空 (null) になります。</li>
-          </ul>
-          <li>日付が変わってから今日分の天気が配信されるまでの0時～5時の間は、<span class="text-info">気象庁 HP で明日分として配信されている天気を今日の天気、明後日分として配信されている天気を明日の天気として扱います。</span></li>
-          <ul>
-            <li>したがって、0時～5時の間は明後日の天気は取得できません。また、明日の最高気温・最低気温・降水確率も取得できません（降水確率のみ null ではなく --% と表示されます）。</li>
-          </ul>
-          <li>forecasts → image はサルベージした各天気アイコンの URL を返しますが、稀にしか発表されない天気などアイコンを判定できなかった場合は「？」アイコンの画像を返すことがあります。もし遭遇した場合は <a href="https://github.com/tsukumijima/weather-api/issues" target="_blank">Issues</a> へ報告していただけると助かります。</li>
-          <li>publicTime_format と description → publicTime_format を追加しました。ISO8601 形式の publicTime を 年/月/日 時間:分:秒 の形で取得できます。
-          </li>
-          <li><span class="text-info">降水確率を表す chanceOfRain を追加しました。今日と明日の 0時～6時・6時～12時・12時～18時・18時～24時 の降水確率を取得できます</span>（明後日は取得できず、常に --% になります）。</li>
-          <ul>
-            <li>今日分の降水確率のうち、過ぎた分（例・12時にアクセスしたときの0時～6時の降水確率）は --% と表示されます。</li>
-          </ul>
-          <li>コードは <a href="https://github.com/tsukumijima/weather-api" target="_blank">GitHub</a> にて公開しています。なにか不具合があれば <a href="https://github.com/tsukumijima/weather-api/issues" target="_blank">Issues</a> へお願いします。</li>
+          <li>3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。</li>
+          <li>万全は期しているつもりですが、丸1日突貫工事で作ったので修正できていない不具合があるかもしれません。</li>
+          <li>一個人が運営している非公式 API です。ニコニコ公式とは一切関係ありません。</li>
+          <li>コメントデータを除いたコードは <a href="https://github.com/tsukumijima/jikkyo-api" target="_blank">GitHub</a> にて公開しています。なにか不具合があれば <a href="https://github.com/tsukumijima/jikkyo-api/issues" target="_blank">Issues</a> へお願いします。</li>
           <ul>
             <li>未検証ですが、自分のサイトでこの API をホストすることも可能です。</li>
           </ul>
@@ -168,9 +147,9 @@
       <div class="card-body p-sm-4 pb-4">
         <div>
           <p>
-            JSONデータをリクエストする際のベースとなるURLは以下になります。<br>
-            <span style="color:#d00;"><strong>{{ url('/') }}/api/forecast</strong></span><br>
-            このURLに下の表のパラメータを加え、実際にリクエストします。
+            データをリクエストする際のベースとなる URL は以下になります。<br>
+            <span style="color:#d00;"><strong>{{ url('/') }}/api/kakolog/{実況ID}</strong></span><br>
+            この URL に下の表のパラメータを加え、実際にリクエストします。
           </p>
           
           <table class="table">
@@ -179,25 +158,43 @@
               <th class="title">説明</th>
             </tr>
             <tr>
-              <th>city</th>
+              <th>{実況ID}</th>
               <td>
-                地域別に定義された ID 番号を表します。<br>
-                リクエストする地域と ID の対応は、livedoor 天気で使われていた <a href="{{ url('/') }}/primary_area.xml" target="_blank">全国の地点定義表</a> 内で<br>「1次細分区（cityタグ）」の ID をご参照ください。（例・佐賀県 伊万里 = 410020 ）
+                ニコニコ実況のチャンネル ID を表します。URL 自体に含めてください。<br>
+                例: NHK総合 → jk1・BS11 → jk211
+              </td>
+            </tr>
+            <tr>
+              <th>starttime</th>
+              <td>
+                取得を開始する時刻の UNIX タイムスタンプを表します。<br>
+              </td>
+            </tr>
+            <tr>
+              <th>endtime</th>
+              <td>
+                取得を終了する時刻の UNIX タイムスタンプを表します。<br>
+              </td>
+            </tr>
+            <tr>
+              <th>format</th>
+              <td>
+                出力するフォーマットを表します。xml（ XML 形式）または json（ JSON 形式）のいずれかを指定します。<br>
+                XML 形式では過去ログをヘッダーをつけた上でそのまま出力します。<br>
+                JSON 形式では過去ログをニコニコ動画のコメント API のレスポンスと類似した形態の JSON 形式に変換して出力します。<br>
               </td>
             </tr>
           </table>
           
           <div class="column d-inline-block px-4 py-3" style="border: 1px solid #dee2e6; width: 100%;">
-            <strong>（例）「福岡県・久留米の天気」を取得する場合</strong><br>
+            <strong>（例）「 2020/11/27 08:00:00 ～ 2020/11/27 08:15:00 の NHK総合の XML 形式のコメント」を取得する場合</strong><br>
             <div>
-              下記 URL にアクセスして JSON データを取得します。HTTP でのアクセスも可能です。<br>
-              基本 URL + 久留米の ID（400040）
+              下記 URL にアクセスしてデータを取得します。<br>
+              基本 URL + 2020/11/27 08:00:00 のタイムスタンプ + 2020/11/27 08:15:00 のタイムスタンプ + フォーマット (xml)
             </div>
-            <a href="{{ url('/') }}/api/forecast/city/400040" target="_blank">{{ url('/') }}/api/forecast/city/400040</a>
-            <div>
-              クエリで取得することもできます。
-            </div>
-            <a href="{{ url('/') }}/api/forecast?city=400040" target="_blank">{{ url('/') }}/api/forecast?city=400040</a>
+            <a href="{{ url('/') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml" target="_blank">
+              {{ url('/') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml
+            </a>
           </div>
         </div>
       </div>
@@ -209,7 +206,7 @@
       <h2 class="card-header font-weight-bold"><i class="fas fa-reply"></i>レスポンスフィールド</h2>
       <div class="card-body p-sm-4 pb-4">
 
-      <p>取得したJSONデータは以下の定義に基づいて構成されています。(プロパティ名は順不同)</p>
+      <p>取得した XML・JSON データは以下の定義に基づいて構成されています。（プロパティ名は順不同）</p>
   
         <table class="table mt-4" cellpadding="0" cellspacing="0" class="normal">
           <tr>
@@ -217,74 +214,20 @@
             <th class="title">内容</th>
           </tr>
           <tr>
-            <th class="thline">publicTime</th>
-            <td class="tdline">予報の発表日時（ ISO8601 形式 / 例・2020-09-01T05:00:00+09:00 ）</td>
-          </tr>
-          <tr>
-            <th class="thline">publicTime_format</th>
-            <td class="tdline">予報の発表日時（例・2020/09/01 05:00:00 ）</td>
-          </tr>
-          <tr>
-            <th class="thline">title</th>
-            <td class="tdline">タイトル・見出し（例・福岡県 久留米 の天気）</td>
-          </tr>
-          <tr>
-            <th class="thline">link</th>
-            <td class="tdline">リクエストされたデータの地域に該当する気象庁 HP 天気予報の URL</td>
-          </tr>
-          <tr>
-            <th class="thline">description</th>
+            <th class="thline">packet</th>
             <td class="tdline">
-              <div style="margin-bottom: 12px;">天気概況文</div>
+              <div style="margin-bottom: 12px;">全てのコメントデータがくるまれている親要素</div>
               <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
                 <tr>
                   <th class="title" nowrap>プロパティ名</th>
                   <th class="title" width="98%">内容</th>
                 </tr>
                 <tr>
-                  <th class="thline">text</th>
-                  <td class="tdline">天気概況文</td>
-                </tr>
-                <tr>
-                  <th class="thline">publicTime</th>
-                  <td class="tdline">天気概況文の発表時刻（ ISO8601 形式 / 例・2020-09-01T04:52:00+09:00 ）</td>
-                </tr>
-                <tr>
-                  <th class="thline">publicTime_format</th>
-                  <td class="tdline">天気概況文の発表時刻（例・2020/09/01 04:52:00 ）</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <th class="thline">forecasts</th>
-            <td class="tdline">
-              <div style="margin-bottom: 12px;">都道府県天気予報の予報日毎の配列</div>
-              <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
-                <tr>
-                  <th class="title" nowrap>プロパティ名</th>
-                  <th class="title" width="98%">内容</th>
-                </tr>
-                <tr>
-                  <th class="thline">date</th>
-                  <td class="tdline">予報日</td>
-                </tr>
-                <tr>
-                  <th class="thline">dateLabel</th>
-                  <td class="tdline">予報日（今日・明日・明後日のいずれか）</td>
-                </tr>
-
-                <tr>
-                  <th class="thline">telop</th>
-                  <td class="tdline">天気（晴れ、曇り、雨など）</td>
-                </tr>
-                
-                <tr>
-                  <th class="thline">temperature</th>
+                  <th class="thline">chat</th>
                   <td class="tdline">
                     <div style="margin-bottom: 12px;">
-                      <strong>max</strong>・・・最高気温<br>
-                      <strong>min</strong>・・・最低気温
+                      コメントデータ<br>
+                      過去ログをそのまま出力しているため、一部のコメントにしか存在しないプロパティもあります<br>
                     </div>
                     <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
                       <tr>
@@ -292,72 +235,49 @@
                         <th class="title" width="98%">内容</th>
                       </tr>
                       <tr>
-                        <th class="thline">celsius</th>
-                        <td class="tdline">摂氏 (°C)</td>
+                        <th class="thline">thread</th>
+                        <td class="tdline">コメントのスレッド ID</td>
                       </tr>
                       <tr>
-                        <th class="thline">fahrenheit</th>
-                        <td class="tdline">華氏 (°F)</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                
-                <tr>
-                  <th class="thline">chanceOfRain</th>
-                  <td class="tdline">
-                    <div style="margin-bottom: 12px;">
-                      降水確率（明後日は取得できず、常に --% になります）<br>
-                      T00_06 などは Java など数字始まりやハイフンを含むキーが使えない言語向けのプロパティです
-                    </div>
-                    <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
-                      <tr>
-                        <th class="title" nowrap>プロパティ名</th>
-                        <th class="title" width="98%">内容</th>
+                        <th class="thline">no</th>
+                        <td class="tdline">コメント番号（コメ番）</td>
                       </tr>
                       <tr>
-                        <th class="thline">00-06 / T00_06</th>
-                        <td class="tdline">0 時から 6 時までの降水確率</td>
+                        <th class="thline">vpos</th>
+                        <td class="tdline">スレッド ID から起算したコメントの再生位置（1/100秒）</td>
                       </tr>
                       <tr>
-                        <th class="thline">06-12 / T06_12</th>
-                        <td class="tdline">6 時から 12 時までの降水確率</td>
+                        <th class="thline">date</th>
+                        <td class="tdline">コメント投稿時間の UNIX タイムスタンプ</td>
                       </tr>
                       <tr>
-                        <th class="thline">12-18 / T12_18</th>
-                        <td class="tdline">12 時から 18 時までの降水確率</td>
+                        <th class="thline">date_usec</th>
+                        <td class="tdline">
+                          コメント投稿時間の小数点以下の時間　コメント投稿時間の正確なタイムスタンプは<br>
+                          date: 1606431600・date_usec: 257855 なら 1606431600.257855 のようになる</td>
                       </tr>
                       <tr>
-                        <th class="thline">18-24 / T18_24</th>
-                        <td class="tdline">18 時から 24 時までの降水確率</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th class="thline">image</th>
-                  <td class="tdline">
-                    <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
-                      <tr>
-                        <th class="title" nowrap>プロパティ名</th>
-                        <th class="title" width="98%">内容</th>
+                        <th class="thline">user_id</th>
+                        <td class="tdline">ユーザー ID（コマンドに 184 が指定されている場合は匿名化される）</td>
                       </tr>
                       <tr>
-                        <th class="thline">title</th>
-                        <td class="tdline">天気（晴れ、曇り、雨など）</td>
+                        <th class="thline">mail</th>
+                        <td class="tdline">コメントのコマンド（184, red naka big など）</td>
                       </tr>
                       <tr>
-                        <th class="thline">url</th>
-                        <td class="tdline">天気アイコンの URL</td>
+                        <th class="thline">premium</th>
+                        <td class="tdline">コメントしたユーザーがプレミアム会員であれば 1</td>
                       </tr>
                       <tr>
-                        <th class="thline">width</th>
-                        <td class="tdline">天気アイコンの幅</td>
+                        <th class="thline">anonymity</th>
+                        <td class="tdline">匿名コメントであれば 1</td>
                       </tr>
                       <tr>
-                        <th class="thline">height</th>
-                        <td class="tdline">天気アイコンの高さ</td>
+                        <th class="thline">content</th>
+                        <td class="tdline">
+                          コメント本文（ XML 形式では chat 要素自体の値）<br>
+                          AA など、まれに複数行コメントがあるので注意<br>
+                        </td>
                       </tr>
                     </table>
                   </td>
@@ -366,57 +286,40 @@
             </td>
           </tr>
           <tr>
-            <th class="thline">location</th>
+            <th class="thline">error</th>
             <td class="tdline">
-              <div style="margin-bottom: 12px;">予報を発表した地域を定義</div>
-              <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
-                <tr>
-                  <th class="title" nowrap>プロパティ名</th>
-                  <th class="title" width="98%">内容</th>
-                </tr>
-                <tr>
-                  <th class="thline">area</th>
-                  <td class="tdline">地方名（例・九州）</td>
-                </tr>
-                <tr>
-                  <th class="thline">pref</th>
-                  <td class="tdline">都道府県名（例・福岡県）</td>
-                </tr>
-                <tr>
-                  <th class="thline">city</th>
-                  <td class="tdline">一次細分区名（例・八幡）</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <th class="thline">copyright</th>
-            <td class="tdline">
-              <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
-                <tr>
-                  <th class="title" nowrap>プロパティ名</th>
-                  <th class="title" width="98%">内容</th>
-                </tr>
-                <tr>
-                  <th class="thline">title</th>
-                  <td class="tdline">コピーライトの文言</td>
-                </tr>
-                <tr>
-                  <th class="thline">link</th>
-                  <td class="tdline">ニコニコ実況 過去ログ APIの URL</td>
-                </tr>
-                <tr>
-                  <th class="thline">image</th>
-                  <td class="tdline">ニコニコ実況 過去ログ APIへの URL 、アイコンなど</td>
-                </tr>
-                <tr>
-                  <th class="thline">provider</th>
-                  <td class="tdline">ニコニコ実況 過去ログ APIで使用している気象データの配信元（気象庁）</td>
-                </tr>
-              </table>
+              エラーメッセージ（エラー発生時のみ）　指定されたフォーマットに合わせて出力されますが、<br>
+              存在しないフォーマットが指定されたりパラメータが不足している場合には常に JSON 形式で出力されます<br>
             </td>
           </tr>
         </table>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="xml-data-sample" class="container mt-4 mb-4 pb-4 pb-sm-0 px-2 px-lg-3">
+    <div class="card">
+      <h2 class="card-header font-weight-bold"><i class="fas fa-code"></i>XML データサンプル</h2>
+      <div class="card-body p-sm-4">
+        
+        <p class="mb-4">
+          XML は指定された期間の過去ログをそのまま出力しているため、必ずしも Valid な XML であるとは限りません（まれに破損している場合がある）。<br>
+        </p>
+
+        <pre>&lt;packet&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2750&quot; vpos=&quot;1440040&quot; date=&quot;1606431601&quot; mail=&quot;184&quot; user_id=&quot;mmJyd4lCsV6e3loLXR0QvZnlnFI&quot; premium=&quot;1&quot; anonymity=&quot;1&quot; date_usec=&quot;373180&quot;&gt;六甲おろし歌って&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2751&quot; vpos=&quot;1440136&quot; date=&quot;1606431602&quot; mail=&quot;184&quot; user_id=&quot;Vz1E1ii0OXV1ApWddfG7niOSYak&quot; anonymity=&quot;1&quot; date_usec=&quot;183595&quot;&gt;ｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2752&quot; vpos=&quot;1440100&quot; date=&quot;1606431603&quot; mail=&quot;184&quot; user_id=&quot;HCnCAmVDEac_T_fkeS9EHkymli8&quot; anonymity=&quot;1&quot; date_usec=&quot;405333&quot;&gt;ｈｊｍｔ&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2753&quot; vpos=&quot;1440298&quot; date=&quot;1606431603&quot; mail=&quot;184&quot; user_id=&quot;SxULPQ3aPP4noCUEGj_1GOEjp8Y&quot; anonymity=&quot;1&quot; date_usec=&quot;965862&quot;&gt;完全版はBSで方式やろな&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2754&quot; vpos=&quot;1440400&quot; date=&quot;1606431605&quot; mail=&quot;184&quot; user_id=&quot;2H54YZyR0BLlv8_1XnlYl-euia4&quot; anonymity=&quot;1&quot; date_usec=&quot;103550&quot;&gt;合唱会&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2755&quot; vpos=&quot;1440400&quot; date=&quot;1606431605&quot; mail=&quot;184&quot; user_id=&quot;0ojZYR0_KDaecXFZGnaqwazTU3w&quot; premium=&quot;1&quot; anonymity=&quot;1&quot; date_usec=&quot;540295&quot;&gt;コンサート&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2756&quot; vpos=&quot;1440400&quot; date=&quot;1606431605&quot; mail=&quot;184&quot; user_id=&quot;FREZGJEF5OhEaGskb3upsxbxu2c&quot; anonymity=&quot;1&quot; date_usec=&quot;585768&quot;&gt;らすとか&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2757&quot; vpos=&quot;1440404&quot; date=&quot;1606431606&quot; mail=&quot;184&quot; user_id=&quot;JknVYfrFwBy2CDrz_jz8bWb5-hU&quot; premium=&quot;1&quot; anonymity=&quot;1&quot; date_usec=&quot;83051&quot;&gt;！？&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2758&quot; vpos=&quot;1440515&quot; date=&quot;1606431606&quot; mail=&quot;184&quot; user_id=&quot;QrzHcVSABkD_JaPWmNzcXYBlzUY&quot; anonymity=&quot;1&quot; date_usec=&quot;782894&quot;&gt;コロナ禍じゃ無かったら結構許されないよな&lt;/chat&gt;
+&lt;chat thread=&quot;1606417201&quot; no=&quot;2759&quot; vpos=&quot;1440803&quot; date=&quot;1606431609&quot; mail=&quot;184&quot; user_id=&quot;CrwzC_JXPIjjPIBW27W1QVtUc80&quot; anonymity=&quot;1&quot; date_usec=&quot;16461&quot;&gt;ハンケチ用意&lt;/chat&gt;
+（以下コメントが続く）
+&lt;/packet&gt;</pre>
 
       </div>
     </div>
@@ -427,127 +330,148 @@
       <h2 class="card-header font-weight-bold"><i class="fas fa-code"></i>JSON データサンプル</h2>
       <div class="card-body p-sm-4">
         
-        <p class="mb-4">livedoor 天気の API では ASCII の範囲外の文字はすべてエスケープされていましたが、この API ではエスケープは行いません。</p>
+        <p class="mb-4">
+          ASCII の範囲外の文字もエスケープされずに出力されます。<br>
+          実際のレスポンスではサイズが大きくなってしまうため、下記のような改行やインデントは行われません。<br>
+        </p>
 
         <pre>{
-  "publicTime": "2020-09-06T05:00:00+09:00",
-  "publicTime_format": "2020/09/06 05:00:00",
-  "title": "福岡県 久留米 の天気",
-  "link": "https://www.jma.go.jp/jp/yoho/346.html",
-  "description": {
-      "text": "福岡県では、強風や高波、竜巻などの激しい突風、急な強い雨、落雷に注意してください。\n\n福岡県は、台風第10号の影響により、概ね曇りとなっています。\n\n6日は、台風第10号の影響により曇りで昼過ぎから雨となり、夜は雷を伴い激しく降るでしょう。また、高温が予想されるため、熱中症など健康管理に注意してください。\n\n7日は、台風第10号の影響により概ね雨となり、雷を伴い非常に激しく降る所がありますが、次第に曇りとなるでしょう。\n\n<天気変化等の留意点>\n筑後地方では、6日6時から7日6時までに予想する降水量は、多い所で1時間に60ミリ、24時間に180ミリの見込みです。",
-      "publicTime": "2020-09-06T04:43:00+09:00",
-      "publicTime_format": "2020/09/06 04:43:00"
-  },
-  "forecasts": [
-      {
-          "date": "2020-09-06",
-          "dateLabel": "今日",
-          "telop": "曇のち雨",
-          "temperature": {
-              "min": null,
-              "max": {
-                  "celsius": "31",
-                  "fahrenheit": "87.8"
-              }
-          },
-          "chanceOfRain": {
-              "00-06": "--%",
-              "06-12": "20%",
-              "12-18": "80%",
-              "18-24": "80%",
-              "T00_06": "--%",
-              "T06_12": "20%",
-              "T12_18": "80%",
-              "T18_24": "80%"
-          },
-          "image": {
-              "title": "曇のち雨",
-              "url": "{{ url('/') }}/icon/13.gif",
-              "width": 50,
-              "height": 31
-          }
-      },
-      {
-          "date": "2020-09-07",
-          "dateLabel": "明日",
-          "telop": "暴風雨",
-          "temperature": {
-              "min": {
-                  "celsius": "25",
-                  "fahrenheit": "77"
-              },
-              "max": {
-                  "celsius": "30",
-                  "fahrenheit": "86"
-              }
-          },
-          "chanceOfRain": {
-              "00-06": "90%",
-              "06-12": "90%",
-              "12-18": "60%",
-              "18-24": "20%",
-              "T00_06": "90%",
-              "T06_12": "90%",
-              "T12_18": "60%",
-              "T18_24": "20%"
-          },
-          "image": {
-              "title": "暴風雨",
-              "url": "{{ url('/') }}/icon/22.gif",
-              "width": 50,
-              "height": 31
-          }
-      },
-      {
-          "date": "2020-09-08",
-          "dateLabel": "明後日",
-          "telop": null,
-          "temperature": {
-              "min": null,
-              "max": null
-          },
-          "chanceOfRain": {
-              "00-06": "--%",
-              "06-12": "--%",
-              "12-18": "--%",
-              "18-24": "--%",
-              "T00_06": "--%",
-              "T06_12": "--%",
-              "T12_18": "--%",
-              "T18_24": "--%"
-          },
-          "image": {
-              "title": null,
-              "url": null,
-              "width": 50,
-              "height": 31
-          }
-      }
-  ],
-  "location": {
-      "city": "久留米",
-      "area": "九州",
-      "prefecture": "福岡県"
-  },
-  "copyright": {
-      "link": "{{ url('/') }}/",
-      "title": "(C) ニコニコ実況 過去ログ API",
-      "image": {
-          "width": 120,
-          "height": 120,
-          "link": "{{ url('/') }}/",
-          "url": "{{ url('/') }}/logo.png",
-          "title": "ニコニコ実況 過去ログ API"
-      },
-      "provider": [
-          {
-              "link": "https://www.jma.go.jp/jma/",
-              "name": "気象庁 Japan Meteorological Agency",
-              "note": "気象庁 HP にて公開されている天気予報を json データへ編集しています。"
-          }
-      ]
-  }
+    "packet": [
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2750",
+                "vpos": "1440040",
+                "date": "1606431601",
+                "mail": "184",
+                "user_id": "mmJyd4lCsV6e3loLXR0QvZnlnFI",
+                "premium": "1",
+                "anonymity": "1",
+                "date_usec": "373180",
+                "content": "六甲おろし歌って"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2751",
+                "vpos": "1440136",
+                "date": "1606431602",
+                "mail": "184",
+                "user_id": "Vz1E1ii0OXV1ApWddfG7niOSYak",
+                "anonymity": "1",
+                "date_usec": "183595",
+                "content": "ｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2752",
+                "vpos": "1440100",
+                "date": "1606431603",
+                "mail": "184",
+                "user_id": "HCnCAmVDEac_T_fkeS9EHkymli8",
+                "anonymity": "1",
+                "date_usec": "405333",
+                "content": "ｈｊｍｔ"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2753",
+                "vpos": "1440298",
+                "date": "1606431603",
+                "mail": "184",
+                "user_id": "SxULPQ3aPP4noCUEGj_1GOEjp8Y",
+                "anonymity": "1",
+                "date_usec": "965862",
+                "content": "完全版はBSで方式やろな"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2754",
+                "vpos": "1440400",
+                "date": "1606431605",
+                "mail": "184",
+                "user_id": "2H54YZyR0BLlv8_1XnlYl-euia4",
+                "anonymity": "1",
+                "date_usec": "103550",
+                "content": "合唱会"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2755",
+                "vpos": "1440400",
+                "date": "1606431605",
+                "mail": "184",
+                "user_id": "0ojZYR0_KDaecXFZGnaqwazTU3w",
+                "premium": "1",
+                "anonymity": "1",
+                "date_usec": "540295",
+                "content": "コンサート"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2756",
+                "vpos": "1440400",
+                "date": "1606431605",
+                "mail": "184",
+                "user_id": "FREZGJEF5OhEaGskb3upsxbxu2c",
+                "anonymity": "1",
+                "date_usec": "585768",
+                "content": "らすとか"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2757",
+                "vpos": "1440404",
+                "date": "1606431606",
+                "mail": "184",
+                "user_id": "JknVYfrFwBy2CDrz_jz8bWb5-hU",
+                "premium": "1",
+                "anonymity": "1",
+                "date_usec": "83051",
+                "content": "！？"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2758",
+                "vpos": "1440515",
+                "date": "1606431606",
+                "mail": "184",
+                "user_id": "QrzHcVSABkD_JaPWmNzcXYBlzUY",
+                "anonymity": "1",
+                "date_usec": "782894",
+                "content": "コロナ禍じゃ無かったら結構許されないよな"
+            }
+        },
+        {
+            "chat": {
+                "thread": "1606417201",
+                "no": "2759",
+                "vpos": "1440803",
+                "date": "1606431609",
+                "mail": "184",
+                "user_id": "CrwzC_JXPIjjPIBW27W1QVtUc80",
+                "anonymity": "1",
+                "date_usec": "16461",
+                "content": "ハンケチ用意"
+            }
+        },
+        （以下コメントが続く）
+    ]
 }</pre>
 
       </div>
