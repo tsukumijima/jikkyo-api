@@ -43,7 +43,7 @@ class KakologController extends Controller
             // XML にフォーマット
             if ($format === 'xml') {
 
-                return response(Kakolog::formatToXML($kakolog_raw))->header('Content-Type', 'application/xml');
+                return response(Kakolog::formatToXml($kakolog_raw))->header('Content-Type', 'application/xml');
 
             // JSON にフォーマット
             } else if ($format === 'json') {
