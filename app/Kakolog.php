@@ -33,17 +33,24 @@ class Kakolog extends Model
         $startdate->setTime(0, 0, 0);
         $enddate->setTime(0, 0, 0);
 
+        // 取得開始時刻～取得終了時刻が7日間を超えている
+        if (intval($startdate->diff($enddate)->format('%R%a')) > 7) {
+            return [
+                'error' => '7日分を超えるコメントを一度に取得することはできません。何日分かに分けて取得してください。',
+            ];
+        }
+
         // 取得開始時刻が取得終了時刻より大きい
         if ($starttime >= $endtime) {
             return [
-                'error' => 'The specified start time is after the end time.',
+                'error' => '指定された取得開始時刻は取得終了時刻よりも後です。',
             ];
         }
 
         // 指定された実況チャンネルが（過去を含め）存在しない
         if (!Storage::disk('local')->exists("kakolog/{$jikkyo_id}")) {
             return [
-                'error' => 'The specified Jikkyo ID does not exist.',
+                'error' => '指定された実況 ID は存在しません。',
             ];
         }
 
@@ -51,7 +58,7 @@ class Kakolog extends Model
         if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $startdate)) or
             !Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $enddate))) {
             return [
-                'error' => 'The kakolog in the specified time range does not exist.',
+                'error' => '指定された時間範囲の過去ログは存在しません。',
             ];
         }
 

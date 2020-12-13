@@ -27,7 +27,7 @@ class KakologController extends Controller
             // 有効なタイムスタンプでない場合はエラー
             if (!$this->isValidTimeStamp($starttime) or !$this->isValidTimeStamp($endtime)) {
                 return [
-                    'error' => 'The start time or end time is invalid.',
+                    'error' => '開始時刻または終了時刻が不正です。',
                 ];
             }
 
@@ -53,7 +53,7 @@ class KakologController extends Controller
             // XML でも JSON でもなかったらエラー
             } else {
                 return [
-                    'error' => 'The format must be xml or json.',
+                    'error' => 'フォーマットは XML または JSON 形式である必要があります。',
                 ];
             }
 
@@ -61,7 +61,7 @@ class KakologController extends Controller
 
             // エラーを返す (JSON)
             return [
-                'error' => 'The required parameter does not exist.',
+                'error' => '必要なパラメーターが存在しません。',
             ];
         }
     }
