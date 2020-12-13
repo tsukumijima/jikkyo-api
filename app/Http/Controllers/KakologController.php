@@ -24,11 +24,16 @@ class KakologController extends Controller
             $starttime = $request->input('starttime');
             $endtime = $request->input('endtime');
 
+            // XML でも JSON でもない場合はエラー
+            if ($format !== 'xml' and $format !== 'json') {
+                $message = Kakolog::errorMessage(['フォーマットは XML または JSON 形式である必要があります。'], 'json');  // JSON 決め打ち
+                return response($message)->header('Content-Type', 'application/json');
+            }
+
             // 有効なタイムスタンプでない場合はエラー
             if (!$this->isValidTimeStamp($starttime) or !$this->isValidTimeStamp($endtime)) {
-                return [
-                    'error' => '開始時刻または終了時刻が不正です。',
-                ];
+                $message = Kakolog::errorMessage(['開始時刻または終了時刻が不正です。'], $format);
+                return response($message)->header('Content-Type', "application/{$format}");
             }
 
             // 生の過去ログを取得
@@ -37,32 +42,30 @@ class KakologController extends Controller
 
             // 指定された時間範囲の過去ログが存在しない
             if (is_array($kakolog_raw)) {
-                return $kakolog_raw;
+                $message = Kakolog::errorMessage($kakolog_raw, $format);
+                return response($message)->header('Content-Type', "application/{$format}");
             }
 
-            // XML にフォーマット
+            // XML にフォーマットして返す
             if ($format === 'xml') {
 
-                return response(Kakolog::formatToXml($kakolog_raw))->header('Content-Type', 'application/xml');
+                $kakolog_xml = Kakolog::formatToXml($kakolog_raw);
 
-            // JSON にフォーマット
+                return response($kakolog_xml)->header('Content-Type', 'application/xml');
+
+            // JSON にフォーマットして返す
             } else if ($format === 'json') {
 
-                return response(Kakolog::formatToJson($kakolog_raw))->header('Content-Type', 'application/json');
-    
-            // XML でも JSON でもなかったらエラー
-            } else {
-                return [
-                    'error' => 'フォーマットは XML または JSON 形式である必要があります。',
-                ];
+                $kakolog_json = Kakolog::formatToJson($kakolog_raw);
+
+                return response($kakolog_json)->header('Content-Type', 'application/json');
             }
 
         } else {
 
-            // エラーを返す (JSON)
-            return [
-                'error' => '必要なパラメーターが存在しません。',
-            ];
+            // 必要なパラメータが存在しない
+            $message = Kakolog::errorMessage(['必要なパラメーターが存在しません。'], 'json');  // JSON 決め打ち
+            return response($message)->header('Content-Type', 'application/json');
         }
     }
 

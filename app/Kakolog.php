@@ -33,33 +33,25 @@ class Kakolog extends Model
         $startdate->setTime(0, 0, 0);
         $enddate->setTime(0, 0, 0);
 
-        // 取得開始時刻～取得終了時刻が7日間を超えている
-        if (intval($startdate->diff($enddate)->format('%R%a')) > 7) {
-            return [
-                'error' => '7日分を超えるコメントを一度に取得することはできません。何日分かに分けて取得してください。',
-            ];
-        }
-
-        // 取得開始時刻が取得終了時刻より大きい
-        if ($starttime >= $endtime) {
-            return [
-                'error' => '指定された取得開始時刻は取得終了時刻よりも後です。',
-            ];
-        }
-
         // 指定された実況チャンネルが（過去を含め）存在しない
         if (!Storage::disk('local')->exists("kakolog/{$jikkyo_id}")) {
-            return [
-                'error' => '指定された実況 ID は存在しません。',
-            ];
+            return ['指定された実況 ID は存在しません。'];
         }
 
         // 取得開始/終了時刻どちらかの .nicojk ファイルが存在しない
         if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $startdate)) or
             !Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $enddate))) {
-            return [
-                'error' => '指定された時間範囲の過去ログは存在しません。',
-            ];
+            return ['指定された期間の過去ログは存在しません。'];
+        }
+
+        // 取得開始時刻が取得終了時刻より大きい
+        if ($starttime >= $endtime) {
+            return ['指定された取得開始時刻は取得終了時刻よりも後です。'];
+        }
+
+        // 取得開始時刻～取得終了時刻が3日間を超えている
+        if (intval($startdate->diff($enddate)->format('%R%a')) > 3) {
+            return ['3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。'];
         }
 
         // 現在作業している日付
@@ -147,6 +139,41 @@ class Kakolog extends Model
     {
         return "kakolog/{$jikkyo_id}/{$datetime->format('Y')}/{$datetime->format('Ymd')}.nicojk";
     }
+
+
+    /**
+     * エラーメッセージを指定の形式でフォーマットして返す
+     * 複数の要素がある場合は改行で連結する
+     *
+     * @param array $message エラーメッセージ
+     * @param string $format フォーマット形式 (XML or JSON)
+     * @return string フォーマットしたエラーメッセージ
+     */
+    public static function errorMessage(array $message, string $format): string
+    {
+
+        // メッセージを結合
+        $message_concat = implode("\n", $message);
+
+        // XML の場合
+        if ($format === 'xml') {
+            
+            return Kakolog::formatToXml("<error>{$message_concat}</error>");
+
+        // JSON の場合
+        } else if ($format === 'json') {
+
+            $message_array = ['error' => $message_concat];
+
+            // json_encode() で JSON にフォーマット
+            // JSON_PRETTY_PRINT はローカル環境のみ（コメントデータが大量だとスペースや改行の分データが余計に増えて重くなる）
+            if (\App::isLocal()) {
+                return json_encode($message_array, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); 
+            } else {
+                return json_encode($message_array, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); 
+            }
+        }
+    }
     
 
     /**
@@ -159,7 +186,11 @@ class Kakolog extends Model
     {
 
         // XML のヘッダをつけてるだけなので Valid な XML かは微妙（たまに壊れてるのとかあるし）
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<packet>\n{$kakolog_raw}\n</packet>";
+        if (strpos($kakolog_raw, '<error>') !== false) {  // <error> が存在するか
+            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n{$kakolog_raw}";
+        } else {
+            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<packet>\n{$kakolog_raw}\n</packet>";
+        }
     }
     
 
