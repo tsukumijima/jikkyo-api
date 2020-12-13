@@ -34,7 +34,7 @@ class JsonSerializer extends SimpleXmlElement implements JsonSerializable
                 $attributes = [];
 
                 foreach ($child->attributes() as $name => $value) {
-                    $attributes["$name"] = (string) $value;
+                    $attributes[$name] = (string) $value;
                 }
 
                 $array[][$tag] = array_merge($attributes, $temp);
