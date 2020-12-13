@@ -36,10 +36,8 @@ class KakologController extends Controller
             $kakolog_raw = Kakolog::getKakolog($jikkyo_id, intval($starttime), intval($endtime));
 
             // 指定された時間範囲の過去ログが存在しない
-            if ($kakolog_raw === false) {
-                return [
-                    'error' => 'The kakolog in the specified time range does not exist.',
-                ];
+            if (is_array($kakolog_raw)) {
+                return $kakolog_raw;
             }
 
             // XML にフォーマット
