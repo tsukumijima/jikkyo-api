@@ -42,20 +42,22 @@ class KakologController extends Controller
                 ];
             }
 
-            // XML または JSON にフォーマット
+            // XML にフォーマット
             if ($format === 'xml') {
-                $kakolog = Kakolog::formatToXML($kakolog_raw);
+
+                return response(Kakolog::formatToXML($kakolog_raw))->header('Content-Type', 'application/xml');
+
+            // JSON にフォーマット
             } else if ($format === 'json') {
-                $kakolog = Kakolog::formatToJson($kakolog_raw);
+
+                return response(Kakolog::formatToJson($kakolog_raw))->header('Content-Type', 'application/json');
+    
+            // XML でも JSON でもなかったらエラー
             } else {
-                // XML でも JSON でもなかったらエラー
                 return [
                     'error' => 'The format must be xml or json.',
                 ];
             }
-
-            // 過去ログを返す
-            return $kakolog;
 
         } else {
 
