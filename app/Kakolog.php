@@ -182,6 +182,11 @@ class Kakolog extends Model
         $kakolog_object = new JsonSerializer($kakolog_xml);
 
         // json_encode() で JSON にフォーマット
-        return json_encode($kakolog_object, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); 
+        // JSON_PRETTY_PRINT はローカル環境のみ（コメントデータが大量だとスペースや改行の分データが余計に増えて重くなる）
+        if (\App::isLocal()) {
+            return json_encode($kakolog_object, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); 
+        } else {
+            return json_encode($kakolog_object, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); 
+        }
     }
 }

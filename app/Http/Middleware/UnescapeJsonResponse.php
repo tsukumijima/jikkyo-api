@@ -25,7 +25,12 @@ class UnescapeJsonResponse
         }
 
         // エンコードオプションを追加して設定し直す
-        $newEncodingOptions = $response->getEncodingOptions() | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
+        // JSON_PRETTY_PRINT はローカル環境のみ
+        if (\App::isLocal()) {
+            $newEncodingOptions = $response->getEncodingOptions() | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
+        } else {
+            $newEncodingOptions = $response->getEncodingOptions() | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+        }
         $response->setEncodingOptions($newEncodingOptions);
 
         return $response;
