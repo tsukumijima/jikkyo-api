@@ -1,3 +1,20 @@
+
+# jikkyo-api
+
+## Setup
+
+1. .env.example を .env にコピーする
+2. .env を環境に合わせて編集する
+3. プロジェクトのディレクトリ内で `composer install` を実行する
+4. Apache の設定で public/ 以下を公開するよう設定する
+5. アクセスできるか確認する
+
+## License
+[MIT License](LICENSE.txt)
+
+
+------------------
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
