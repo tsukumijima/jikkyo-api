@@ -203,10 +203,6 @@ table > tbody > tr > th{
     margin: 10px 30px 6px;
 }
 
-.column a{
-    margin-left: 30px;
-}
-
 #footer {
     position: absolute;
     left: 0;

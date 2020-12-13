@@ -191,9 +191,10 @@
             <strong>（例）「 2020/11/27 08:00:00 ～ 2020/11/27 08:15:00 の NHK総合の XML 形式のコメント」を取得する場合</strong><br>
             <div>
               下記 URL にアクセスしてデータを取得します。<br>
-              基本 URL + 2020/11/27 08:00:00 のタイムスタンプ + 2020/11/27 08:15:00 のタイムスタンプ + フォーマット (xml)
+              基本 URL + 2020/11/27 08:00:00 のタイムスタンプ + 2020/11/27 08:15:00 のタイムスタンプ + フォーマット (xml)<br>
+              UNIX タイムスタンプの計算は <a href="https://tool.konisimple.net/date/unixtime" target="_blank">Unixtime相互変換ツール</a> のサイトが使いやすいです。
             </div>
-            <a href="{{ url('/') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml" target="_blank">
+            <a style="margin-left: 30px;" href="{{ url('/') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml" target="_blank">
               {{ url('/') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml
             </a>
           </div>
