@@ -38,15 +38,15 @@ class Kakolog extends Model
             return ['指定された実況 ID は存在しません。'];
         }
 
+        // 取得開始時刻が取得終了時刻より大きい
+        if ($starttime >= $endtime) {
+            return ['指定された取得開始時刻は取得終了時刻よりも後です。'];
+        }
+
         // 取得開始/終了時刻どちらかの .nicojk ファイルが存在しない
         if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $startdate)) or
             !Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $enddate))) {
             return ['指定された期間の過去ログは存在しません。'];
-        }
-
-        // 取得開始時刻が取得終了時刻より大きい
-        if ($starttime >= $endtime) {
-            return ['指定された取得開始時刻は取得終了時刻よりも後です。'];
         }
 
         // 取得開始時刻～取得終了時刻が3日間を超えている
