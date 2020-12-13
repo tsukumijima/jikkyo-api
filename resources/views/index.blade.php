@@ -128,8 +128,9 @@
       <div class="card-body p-sm-4">
 
         <ul class="mb-0">
+          <li>レスポンスの 文字コードは UTF-8（BOMなし）、改行コードは LF です。ツール等で利用する際は注意してください。</li>
           <li>3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。</li>
-          <li>万全は期しているつもりですが、丸1日突貫工事で作ったので修正できていない不具合があるかもしれません。</li>
+          <li>万全は期しているつもりですが、1日半突貫工事で作ったので修正できていない不具合があるかもしれません。</li>
           <li>一個人が運営している非公式 API です。ニコニコ公式とは一切関係ありません。</li>
           <li>コメントデータを除いたコードは <a href="https://github.com/tsukumijima/jikkyo-api" target="_blank">GitHub</a> にて公開しています。なにか不具合があれば <a href="https://github.com/tsukumijima/jikkyo-api/issues" target="_blank">Issues</a> へお願いします。</li>
           <ul>
@@ -206,7 +207,10 @@
       <h2 class="card-header font-weight-bold"><i class="fas fa-reply"></i>レスポンスフィールド</h2>
       <div class="card-body p-sm-4 pb-4">
 
-      <p>取得した XML・JSON データは以下の定義に基づいて構成されています。（プロパティ名は順不同）</p>
+      <p>
+        取得した XML・JSON データは以下の定義に基づいて構成されています。（プロパティ名は順不同）<br>
+        文字コードは UTF-8（BOMなし）、改行コードは LF です。
+      </p>
   
         <table class="table mt-4" cellpadding="0" cellspacing="0" class="normal">
           <tr>
