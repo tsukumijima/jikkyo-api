@@ -12,7 +12,7 @@ class Kakolog extends Model
     /**
      * 過去ログを取得する
      * 指定された開始時刻/終了時刻の xml ファイルがあれば生の過去ログデータを返す
-     * 指定された時間範囲の過去ログが存在しない場合はエラーメッセージの入った配列を返す
+     * 指定された時間範囲の過去ログが存在しないなど取得できなかった場合はエラーメッセージの入った配列を返す
      *
      * @param string $jikkyo_id 実況ID (ex: jk211)
      * @param integer $starttime 取得を開始する時刻のタイムスタンプ
@@ -23,83 +23,109 @@ class Kakolog extends Model
     {
 
         // DateTime オブジェクトにする
-        $start_datetime = new DateTime("@{$starttime}");
-        $end_datetime = new DateTime("@{$endtime}");
+        // setTimestamp() を使わないとロケールが考慮されないらしい…？
+        $startdate = new DateTime();
+        $startdate->setTimestamp($starttime);
+        $enddate = new DateTime();
+        $enddate->setTimestamp($endtime);
+
+        // $startdate, $enddate は日付の比較用なので、時間:分:秒 の情報は削除して 00:00:00 に統一
+        $startdate->setTime(0, 0, 0);
+        $enddate->setTime(0, 0, 0);
 
         // 取得開始時刻が取得終了時刻より小さいか
         if ($starttime < $endtime) {
 
-            // 取得開始/終了時刻双方の .nicojk ファイルが存在するなら続行
-            if (Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $start_datetime)) and
-                Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $end_datetime))) {
+            // 指定された実況チャンネルが（過去を含め）存在するなら続行
+            if (Storage::disk('local')->exists("kakolog/{$jikkyo_id}")) {
 
-                // 現在作業している日付
-                $current_datetime = $start_datetime;
+                // 取得開始/終了時刻双方の .nicojk ファイルが存在するなら続行
+                if (Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $startdate)) and
+                    Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $enddate))) {
 
-                // 過去ログ、この文字列に足していく
-                $kakolog = '';
+                    // 現在作業している日付
+                    $currentdate = $startdate;
 
-                // 終了時刻の日付になるまで日付を足し続ける
-                for (; $current_datetime->getTimeStamp() <= $endtime; $current_datetime->modify('+1 days')) {
+                    // 過去ログ、この文字列に足していく
+                    $kakolog = '';
 
-                    // 過去ログを取得（ trim() で両端の改行を除去しておく）
-                    $kakolog_file = trim(Storage::disk('local')->get(Kakolog::getKakologFileName($jikkyo_id, $current_datetime)));
+                    // 終了時刻の日付になるまで日付を足し続ける
+                    for (; $currentdate->getTimeStamp() <= $endtime; $currentdate->modify('+1 days')) {
 
-                    // 開始/終了時刻の日付のみ
-                    if ($start_datetime->format('Ymd') === $current_datetime->format('Ymd') or
-                        $end_datetime->format('Ymd') === $current_datetime->format('Ymd')) {
+                        // 過去ログを取得（ trim() で両端の改行を除去しておく）
+                        $kakolog_file = trim(Storage::disk('local')->get(Kakolog::getKakologFileName($jikkyo_id, $currentdate)));
 
-                        // コメントを <chat> 要素ごとに分割する（ \n で分割しないのはまれに複数行コメントが存在するため）
-                        $kakolog_array = explode('</chat>', $kakolog_file);
+                        // 開始/終了時刻の日付のみ
+                        if ($startdate->getTimeStamp() === $currentdate->getTimeStamp() or
+                            $enddate->getTimeStamp() === $currentdate->getTimeStamp()) {
 
-                        // start_datetime よりも前のコメントを削除
-                        foreach ($kakolog_array as $key => $value) {
-                            
-                            // コメントのタイムスタンプを抽出
-                            preg_match('/date="([0-9]+?)"/s', $value, $matches);
+                            // コメントを <chat> 要素ごとに分割する（ \n で分割しないのはまれに複数行コメントが存在するため）
+                            $kakolog_array = explode('</chat>', $kakolog_file);
 
-                            // タイムスタンプが存在しない（空要素など）
-                            if (!isset($matches[1])) {
-                                // 当該要素を削除して次のループへ
-                                unset($kakolog_array[$key]);
-                                continue;
-                            }
-                            $timestamp = $matches[1];
+                            // startdate よりも前のコメントを削除
+                            foreach ($kakolog_array as $key => $value) {
+                                
+                                // コメントのタイムスタンプを正規表現で抽出
+                                preg_match('/date="([0-9]+?)"/s', $value, $matches);
 
-                            // 開始時刻の日付のみ、開始時刻のタイムスタンプよりも小さいコメントを削除
-                            if ($start_datetime->format('Ymd') === $current_datetime->format('Ymd')) {
-                                if ($timestamp < $starttime) {
+                                // タイムスタンプが存在しない（</chat>で分割した最後の要素、空要素など）
+                                if (!isset($matches[1])) {
+                                    // 当該要素を削除して次のループへ
                                     unset($kakolog_array[$key]);
+                                    continue;
+                                }
+                                // コメントのタイムスタンプ
+                                $timestamp = $matches[1];
+
+                                // 開始時刻の日付のみ、開始時刻のタイムスタンプよりも小さいコメントを削除
+                                if ($startdate->getTimeStamp() === $currentdate->getTimeStamp()) {
+                                    if ($timestamp < $starttime) {
+                                        unset($kakolog_array[$key]);
+                                    }
+                                }
+
+                                // 終了時刻の日付のみ、終了時刻のタイムスタンプよりも大きいコメントを削除
+                                if ($enddate->getTimeStamp() === $currentdate->getTimeStamp()) {
+                                    if ($timestamp > $endtime) {
+                                        unset($kakolog_array[$key]);
+                                    }
                                 }
                             }
 
-                            // 終了時刻の日付のみ、終了時刻のタイムスタンプよりも大きいコメントを削除
-                            if ($end_datetime->format('Ymd') === $current_datetime->format('Ymd')) {
-                                if ($timestamp > $endtime) {
-                                    unset($kakolog_array[$key]);
-                                }
+                            // 一度配列に分割したコメントを implode() で文字列に戻す
+                            $kakolog_implode = implode('</chat>', $kakolog_array).'</chat>';
+
+                            // 内容が </chat> しかない（＝指定期間のコメントが存在しない）場合は空に設定
+                            if ($kakolog_implode === '</chat>') {
+                                $kakolog_implode = '';
                             }
+
+                            // $kakolog に追記
+                            // 前後の改行は trim() で削除しておく
+                            $kakolog = $kakolog . trim($kakolog_implode);
+
+                        // それ以外の日付
+                        } else {
+
+                            // そのまま追記
+                            $kakolog = $kakolog . $kakolog_file;
                         }
-
-                        // 分割したコメントを結合して $kakolog に追記
-                        // 前後の改行は trim() で削除しておく
-                        $kakolog = trim($kakolog.implode('</chat>', $kakolog_array).'</chat>');
-
-                    // それ以外の日付
-                    } else {
-
-                        // そのまま追記
-                        $kakolog = $kakolog . $kakolog_file;
                     }
+
+                    // 生の過去ログデータを返す
+                    return $kakolog;
+
+                // 存在しないのでエラーを返す
+                } else {
+                    return [
+                        'error' => 'The kakolog in the specified time range does not exist.',
+                    ];
                 }
 
-                // 生の過去ログデータを返す
-                return $kakolog;
-
-            // 存在しないのでエラーを返す
+            // 指定された実況チャンネルが（過去を含め）存在しない
             } else {
                 return [
-                    'error' => 'The kakolog in the specified time range does not exist.',
+                    'error' => 'The specified Jikkyo ID does not exist.',
                 ];
             }
         
@@ -116,12 +142,12 @@ class Kakolog extends Model
      * 過去ログのファイル名を取得する
      *
      * @param string $jikkyo_id 実況ID
-     * @param DateTime $_datetime DateTime オブジェクト
+     * @param DateTime $datetime DateTime オブジェクト
      * @return string 過去ログのファイル名
      */
-    private static function getKakologFileName(string $jikkyo_id, DateTime $_datetime): string
+    private static function getKakologFileName(string $jikkyo_id, DateTime $datetime): string
     {
-        return "kakolog/{$jikkyo_id}/{$_datetime->format('Y')}/{$_datetime->format('Ymd')}.nicojk";
+        return "kakolog/{$jikkyo_id}/{$datetime->format('Y')}/{$datetime->format('Ymd')}.nicojk";
     }
     
 
