@@ -3,11 +3,14 @@
 
 ## Setup
 
-1. .env.example を .env にコピーする
-2. .env を環境に合わせて編集する
-3. プロジェクトのディレクトリ内で `composer install` を実行する
-4. Apache の設定で public/ 以下を公開するよう設定する
-5. アクセスできるか確認する
+1. あらかじめ Apache で PHP が動く状態にしておく
+2. Laravel に必要な PHP の拡張機能をでインストールする
+   -  Ubuntu なら　`sudo apt install php7.4-bcmath php7.4-curl php7.4-mbstring php7.4-xml php7.4-zip` でインストールできる
+3. .env.example を .env にコピーする
+4. .env を環境に合わせて編集する
+5. プロジェクトのディレクトリ内で `composer install` を実行する
+6. Apache の設定で public/ 以下を公開するよう設定する
+7. アクセスできるか確認する
 
 ## License
 [MIT License](LICENSE.txt)
