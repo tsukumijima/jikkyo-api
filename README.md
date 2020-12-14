@@ -9,8 +9,10 @@
 3. .env.example を .env にコピーする
 4. .env を環境に合わせて編集する
 5. プロジェクトのディレクトリ内で `composer install` を実行する
-6. Apache の設定で public/ 以下を公開するよう設定する
-7. アクセスできるか確認する
+6. Apache の設定で `public/` 以下を公開するよう設定する
+7. `storage/app/kakolog/` 以下に [配布されている過去ログ](https://11.gigafile.nu/0203-oc29de8b6ce8a298cb8c268f1bc9ab39f) を入れる
+   - 過去ログは `storage/app/kakolog/jk1/2020/20201127.nicojk` のようなパスでアクセスできるようにしておく
+8. アクセスできるか確認する
 
 ## License
 [MIT License](LICENSE.txt)
