@@ -116,7 +116,7 @@
       <div class="card-body p-sm-4">
 
         <p>ニコニコ実況 過去ログ APIは、ニコニコ実況の過去ログを XML や JSON データで提供する非公式 API です。</p>
-        <p class="mb-0">（準備中）</p>
+        <p class="mb-0">（概要準備中）</p>
         
       </div>
     </div>
@@ -128,11 +128,23 @@
       <div class="card-body p-sm-4">
 
         <ul class="mb-0">
+          <li>2020 年 12 月 15 日までに投稿された、旧ニコニコ実況の全ての過去ログを取得できます。</li>
+          <ul>
+            <li>過去ログが存在しない時刻（例: 2008 年 11 月 26 日よりも前の時刻）を指定するとエラーになります。</li>
+            <li>現時点ではニコ生に移行した新しいニコニコ実況で投稿された過去ログには対応していませんが、近いうちに対応予定です。</li>
+            <li>また、過去ログのダウンロードボタンや過去ログビューアなども追々実装予定です。
+            </li>
+          </ul>
           <li>レスポンスの 文字コードは UTF-8（BOMなし）、改行コードは LF です。ツール等で利用する際は注意してください。</li>
           <li>3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。</li>
           <li>万全は期しているつもりですが、1日半突貫工事で作ったので修正できていない不具合があるかもしれません。</li>
+          <li>サーバーは 3 時と 15 時に再起動します。その関係で、再起動後 2 ～ 3 分は API にアクセスできなくなります。</li>
           <li>一個人が運営している非公式 API です。ニコニコ公式とは一切関係ありません。</li>
-          <li>コメントデータを除いたコードは <a href="https://github.com/tsukumijima/jikkyo-api" target="_blank">GitHub</a> にて公開しています。なにか不具合があれば <a href="https://github.com/tsukumijima/jikkyo-api/issues" target="_blank">Issues</a> へお願いします。</li>
+          <li>旧ニコニコ実況の過去ログデータは <a href="https://47.gigafile.nu/0214-h5003986d78e33dd116484423cfb5d981" target="_blank">Nekopanda 氏が配布されているもの</a> を利用しています。</li>
+          <ul>
+            <li>11 年分の全チャンネルの過去ログを完璧に集めていただき感謝します。</li>
+          </ul>
+          <li>過去ログデータを除いたコードは <a href="https://github.com/tsukumijima/jikkyo-api" target="_blank">GitHub</a> にて公開しています。なにか不具合があれば <a href="https://github.com/tsukumijima/jikkyo-api/issues" target="_blank">Issues</a> へお願いします。</li>
           <ul>
             <li>未検証ですが、自分のサイトでこの API をホストすることも可能です。</li>
           </ul>
