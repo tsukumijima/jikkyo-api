@@ -10,9 +10,12 @@
 4. .env を環境に合わせて編集する
 5. プロジェクトのディレクトリ内で `composer install` を実行する
 6. Apache の設定で `public/` 以下を公開するよう設定する
-7. `storage/app/kakolog/` 以下に [配布されている過去ログ](https://47.gigafile.nu/0214-h5003986d78e33dd116484423cfb5d981) を入れる
+7. `storage/app/kakolog/` 以下に [配布されている旧ニコニコ実況の過去ログ](https://47.gigafile.nu/0214-h5003986d78e33dd116484423cfb5d981) を入れる
    - 過去ログは `storage/app/kakolog/jk1/2020/20201127.nicojk` のようなパスでアクセスできるようにしておく
-8. アクセスできるか確認する
+8. 適当なディレクトリに [JKCommentCrawler](https://github.com/tsukumijima/JKCommentCrawler) をインストールする
+   - その後、JKCommentCrawler.ini で `jkcomment_folder` を `(jikkyo-apiを置いたパス)/storage/app/kakolog/` に変更する
+   - 終わったら、適宜 Cron で <code>JKCommentCrawler all \`date +"%Y/%m/%d"\`</code> が実行され、定期的に今日分の全チャンネルの過去ログが取得されるように設定する 
+9.  アクセスできるか確認する
 
 ## License
 [MIT License](LICENSE.txt)
