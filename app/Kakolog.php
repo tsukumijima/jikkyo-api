@@ -43,6 +43,11 @@ class Kakolog extends Model
             return ['開始時刻または終了時刻が不正です。'];
         }
 
+        // 取得開始時刻と取得終了時刻が同じ
+        if ($starttime === $endtime) {
+            return ['取得開始時刻と取得終了時刻が同じ時刻です。'];
+        }
+
         // 取得開始時刻が取得終了時刻より大きい
         if ($starttime >= $endtime) {
             return ['指定された取得開始時刻は取得終了時刻よりも後です。'];
