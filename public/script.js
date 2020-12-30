@@ -106,28 +106,72 @@ $(function() {
         $('#timepicker-end').val(endtime.format('HH:mm:ss'));
     });
 
+    // API URL を作成してエラーがないかチェック
+    function checkAPI() {
+
+        // Promise を返す
+        return new Promise((resolve, reject) => {
+        
+            // API URL を構築
+            const api_url = `/api/kakolog/${channel}?starttime=${starttime.unix()}&endtime=${endtime.unix()}&format=xml`;
+
+            // エラーが出ないか確認する
+            $.ajax({
+                url: api_url.replace('xml', 'json'),
+            }).done((response, textStatus, jqXHR) => {
+                if (response.error) {  // エラーがあれば
+                    // モーダルにエラーを表示
+                    $('#modal .modal-body').text(response.error);
+                    $('#modal').modal();
+                    reject(response.error);
+                } else {
+                    resolve(api_url);  // エラーなし
+                }
+            }).fail((jqXHR, textStatus, errorThrown) => {
+                // モーダルにエラーを表示
+                $('#modal .modal-body').text('不明なエラーが発生しました。');
+                $('#modal').modal();
+                reject('不明なエラーが発生しました。');
+            });
+        });
+    }
+
     // ダウンロードボタンがクリックされたとき
     $('#download-button').click((event) => {
-        
-        // url 構築
-        const url = `/api/kakolog/${channel}?starttime=${starttime.unix()}&endtime=${endtime.unix()}&format=xml`;
 
-        // 仮想の a 要素を作成してダウンロードさせる
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${channel}_${starttime.format('YYYYMMDD-HHmmss')}_${endtime.format('YYYYMMDD-HHmmss')}.xml`;
-        link.click();
+        // エラーがなければ
+        checkAPI().then((api_url) => {
+    
+            // 仮想の a 要素を作成してダウンロードさせる
+            const link = document.createElement('a');
+            link.href = api_url;
+            link.download = `${channel}_${starttime.format('YYYYMMDD-HHmmss')}_${endtime.format('YYYYMMDD-HHmmss')}.xml`;
+            link.click();
+
+        // エラーがあれば
+        }).catch((error) => {
+
+            // エラーをコンソールに表示
+            console.error(`Error: ${error}`);
+        });
 
     });
 
     // 遷移ボタンがクリックされたとき
     $('#urlopen-button').click((event) => {
-        
-        // url 構築
-        const url = `/api/kakolog/${channel}?starttime=${starttime.unix()}&endtime=${endtime.unix()}&format=xml`;
 
-        // 新しいタブで API URL を開く
-        window.open(url, '_blank')
+        // エラーがなければ
+        checkAPI().then((api_url) => {
+
+            // 新しいタブで API URL を開く
+            window.open(api_url, '_blank');
+
+        // エラーがあれば
+        }).catch((error) => {
+
+            // エラーをコンソールに表示
+            console.error(`Error: ${error}`);
+        });
 
     });
 
