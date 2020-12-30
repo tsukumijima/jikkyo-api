@@ -41,13 +41,13 @@ pre {
     font-family: "Menlo", "Consolas", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", monospace;
 }
 
-table:not(.bootstrap-datetimepicker-widget *) {
+table.table-request, table.table-response {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
-table tbody:not(.bootstrap-datetimepicker-widget *) {
+table.table-request tbody, table.table-response tbody {
     display: table;
     width: 100%;
 }

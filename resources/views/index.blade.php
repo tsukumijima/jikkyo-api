@@ -124,7 +124,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-broadcast-tower mr-2"></i>チャンネル</div>
               </div>
-              <select class="custom-select h-100">
+              <select id="channel-picker" class="custom-select h-100">
                 <optgroup label="地デジ">
                   <option value="jk1">jk1: NHK総合</option>
                   <option value="jk2">jk2: NHKEテレ </option>
@@ -136,6 +136,15 @@
                   <option value="jk9">jk9: TOKYO MX</option>
                 </optgroup>
                 <optgroup label="BS">
+                  <option value="jk101">jk101: NHK BS1</option>
+                  <option value="jk103">jk103: NHK BSプレミアム</option>
+                  <option value="jk141">jk141: BS日テレ</option>
+                  <option value="jk151">jk151: BS朝日</option>
+                  <option value="jk161">jk161: BS-TBS</option>
+                  <option value="jk171">jk171: BSテレ東</option>
+                  <option value="jk181">jk181: BSフジ</option>
+                  <option value="jk211">jk211: BS11</option>
+                  <option value="jk222">jk211: BS12 トゥエルビ</option>
                 </optgroup>
               </select>
             </div>
@@ -154,15 +163,15 @@
           </div>
           <div class="form-group align-items-center justify-content-around">
             <div class="btn-group">
-              <button id="time-minus30-buttom" type="button" class="btn btn-info">－30分</button>
-              <button type="button" class="btn btn-success">－5分</button>
+              <button id="time-minus30-button" type="button" class="btn btn-info">－30分</button>
+              <button id="time-minus5-button" type="button" class="btn btn-success">－5分</button>
             </div>
-            <button id="" type="button" class="btn btn-outline-secondary">
+            <button id="reflect-button" type="button" class="btn btn-outline-secondary">
               <svg class="download-form-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M207 477.5L12.7 283.1c-9.4-9.4-9.4-24.6 0-33.9l22.7-22.7c9.4-9.4 24.5-9.4 33.9 0l154.7 154 154.7-154c9.4-9.3 24.5-9.3 33.9 0l22.7 22.7c9.4 9.4 9.4 24.6 0 33.9L241 477.5c-9.4 9.3-24.6 9.3-34 0zm34-192L435.3 91.1c9.4-9.4 9.4-24.6 0-33.9l-22.7-22.7c-9.4-9.4-24.5-9.4-33.9 0L224 188.5 69.3 34.5c-9.4-9.3-24.5-9.3-33.9 0L12.7 57.2c-9.4 9.4-9.4 24.6 0 33.9L207 285.5c9.4 9.3 24.6 9.3 34 0z" class=""></path></svg>
             </button>
             <div class="btn-group">
-              <button type="button" class="btn btn-success">＋5分</button>
-              <button type="button" class="btn btn-info">＋30分</button>
+              <button id="time-plus5-button" type="button" class="btn btn-success">＋5分</button>
+              <button id="time-plus30-button" type="button" class="btn btn-info">＋30分</button>
             </div>
           </div>
           <div class="form-group mb-4">
@@ -178,8 +187,8 @@
             </div>
           </div>
           <div class="form-group mb-0 align-items-center justify-content-center">
-            <button type="button" class="btn btn-primary mr-2">コメントを XML でダウンロード</button>
-            <button type="button" class="btn btn-secondary">コメントの API URL を開く</button>
+            <button id="download-button" type="button" class="btn btn-primary mr-2">コメントを XML でダウンロード</button>
+            <button id="urlopen-button" type="button" class="btn btn-secondary">コメントの API URL を開く</button>
           </div>
         </div>
       </div>
@@ -260,7 +269,7 @@
             この URL に下の表のパラメータを加え、実際にリクエストします。
           </p>
           
-          <table class="table">
+          <table class="table table-request">
             <tr>
               <th class="title" nowrap>パラメータ名</th>
               <th class="title">説明</th>
@@ -320,7 +329,7 @@
         文字コードは UTF-8（BOMなし）、改行コードは LF です。
       </p>
   
-        <table class="table mt-4" cellpadding="0" cellspacing="0" class="normal">
+        <table class="table table-response mt-4" cellpadding="0" cellspacing="0" class="normal">
           <tr>
             <th class="title" nowrap>プロパティ名</th>
             <th class="title">内容</th>
@@ -329,7 +338,7 @@
             <th class="thline">packet</th>
             <td class="tdline">
               <div style="margin-bottom: 12px;">全てのコメントデータがくるまれている親要素</div>
-              <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
+              <table cellpadding="0" cellspacing="0" width="100%" class="tableline  table-response">
                 <tr>
                   <th class="title" nowrap>プロパティ名</th>
                   <th class="title" width="98%">内容</th>
@@ -341,7 +350,7 @@
                       コメントデータ<br>
                       過去ログをそのまま出力しているため、一部のコメントにしか存在しないプロパティもあります<br>
                     </div>
-                    <table cellpadding="0" cellspacing="0" width="100%" class="tableline">
+                    <table cellpadding="0" cellspacing="0" width="100%" class="tableline  table-response">
                       <tr>
                         <th class="title" nowrap>プロパティ名</th>
                         <th class="title" width="98%">内容</th>
