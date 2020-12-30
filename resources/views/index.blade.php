@@ -27,11 +27,16 @@
 
   <!-- JavaScript -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
   <script type="text/javascript" src="{{ url('/') }}/script.js"></script>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
   <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css">
   <link rel="stylesheet" type="text/css" href="{{ url('/') }}/style.css">
 
@@ -109,6 +114,77 @@
       </div>
     </div>
   </nav>
+
+  <div id="download" class="container mt-4 px-2 px-lg-3">
+    <div class="card">
+      <div class="card-body p-sm-4">
+        <div class="download-form">
+          <div class="form-group">
+            <div class="input-group mb-1">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-broadcast-tower mr-2"></i>チャンネル</div>
+              </div>
+              <select class="custom-select h-100">
+                <optgroup label="地デジ">
+                  <option value="jk1">jk1: NHK総合</option>
+                  <option value="jk2">jk2: NHKEテレ </option>
+                  <option value="jk4">jk4: 日本テレビ</option>
+                  <option value="jk5">jk5: テレビ朝日</option>
+                  <option value="jk6">jk6: TBSテレビ</option>
+                  <option value="jk7">jk7: テレビ東京</option>
+                  <option value="jk8">jk8: フジテレビ</option>
+                  <option value="jk9">jk9: TOKYO MX</option>
+                </optgroup>
+                <optgroup label="BS">
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group date">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-calendar mr-2"></i>日付</div>
+              </div>
+              <input id="datepicker-start" type="text" class="form-control datetimepicker-input" placeholder="2020/12/15" data-toggle="datetimepicker">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-clock mr-2"></i>時刻</div>
+              </div>
+              <input id="timepicker-start" type="text" class="form-control datetimepicker-input" placeholder="08:00:00" data-toggle="datetimepicker">
+            </div>
+          </div>
+          <div class="form-group align-items-center justify-content-around">
+            <div class="btn-group">
+              <button id="time-minus30-buttom" type="button" class="btn btn-info">－30分</button>
+              <button type="button" class="btn btn-success">－5分</button>
+            </div>
+            <button id="" type="button" class="btn btn-outline-secondary">
+              <svg class="download-form-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M207 477.5L12.7 283.1c-9.4-9.4-9.4-24.6 0-33.9l22.7-22.7c9.4-9.4 24.5-9.4 33.9 0l154.7 154 154.7-154c9.4-9.3 24.5-9.3 33.9 0l22.7 22.7c9.4 9.4 9.4 24.6 0 33.9L241 477.5c-9.4 9.3-24.6 9.3-34 0zm34-192L435.3 91.1c9.4-9.4 9.4-24.6 0-33.9l-22.7-22.7c-9.4-9.4-24.5-9.4-33.9 0L224 188.5 69.3 34.5c-9.4-9.3-24.5-9.3-33.9 0L12.7 57.2c-9.4 9.4-9.4 24.6 0 33.9L207 285.5c9.4 9.3 24.6 9.3 34 0z" class=""></path></svg>
+            </button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-success">＋5分</button>
+              <button type="button" class="btn btn-info">＋30分</button>
+            </div>
+          </div>
+          <div class="form-group mb-4">
+            <div class="input-group date">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-calendar mr-2"></i>日付</div>
+              </div>
+              <input id="datepicker-end" type="text" class="form-control datetimepicker-input" placeholder="2020/12/15" data-toggle="datetimepicker">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-clock mr-2"></i>時刻</div>
+              </div>
+              <input id="timepicker-end" type="text" class="form-control datetimepicker-input" placeholder="08:00:00" data-toggle="datetimepicker">
+            </div>
+          </div>
+          <div class="form-group mb-0 align-items-center justify-content-center">
+            <button type="button" class="btn btn-primary mr-2">コメントを XML でダウンロード</button>
+            <button type="button" class="btn btn-secondary">コメントの API URL を開く</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="about" class="container mt-4 px-2 px-lg-3">
     <div class="card">

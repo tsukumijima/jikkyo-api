@@ -11,6 +11,7 @@ html {
 }
 
 body {
+    font-family: -apple-system,BlinkMacSystemFont,"Open Sans","Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     background-image: url(/background.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -19,7 +20,7 @@ body {
     margin-top: 82px;
 }
 
-i {
+.nav-link i, .card-header i {
     margin-right: 10px;
 }
 
@@ -40,13 +41,13 @@ pre {
     font-family: "Menlo", "Consolas", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", monospace;
 }
 
-table {
+table:not(.bootstrap-datetimepicker-widget *) {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
-table tbody {
+table tbody:not(.bootstrap-datetimepicker-widget *) {
     display: table;
     width: 100%;
 }
@@ -152,7 +153,7 @@ h2.card-header {
     }
 }
 
-.card-body ul {
+.card-body ul:not(.bootstrap-datetimepicker-widget *) {
     margin-bottom: 5px !important;
     padding-left: 30px;
 }
@@ -179,7 +180,7 @@ table.table tr:last-of-type {
     border-bottom: 1px solid #dee2e6;
 }
 
-table > tbody > tr > th{
+table > tbody > tr > th {
     background: #dcf3ff;
 }
 
@@ -201,6 +202,35 @@ table > tbody > tr > th{
 
 .column div {
     margin: 10px 30px 6px;
+}
+
+.download-form .form-group {
+    display: flex;
+}
+
+.download-form {
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+.download-form-icon {
+    height: 32px;
+}
+
+.download-form .input-group-text {
+    font-size: 17.5px !important;
+}
+
+.download-form select {
+    font-size: 17px !important;
+}
+
+.download-form option {
+    font-size: 16px !important;
+}
+
+.download-form input {
+    font-size: 21px !important;
 }
 
 #footer {
