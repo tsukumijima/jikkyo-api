@@ -30,12 +30,6 @@ class KakologController extends Controller
                 return response($message)->header('Content-Type', 'application/json');
             }
 
-            // 有効なタイムスタンプでない場合はエラー
-            if (!$this->isValidTimeStamp($starttime) or !$this->isValidTimeStamp($endtime)) {
-                $message = Kakolog::errorMessage(['開始時刻または終了時刻が不正です。'], $format);
-                return response($message)->header('Content-Type', "application/{$format}");
-            }
-
             // 生の過去ログを取得
             // xml ヘッダはついていない
             $kakolog_raw = Kakolog::getKakolog($jikkyo_id, intval($starttime), intval($endtime));
@@ -67,17 +61,5 @@ class KakologController extends Controller
             $message = Kakolog::errorMessage(['必要なパラメーターが存在しません。'], 'json');  // JSON 決め打ち
             return response($message)->header('Content-Type', 'application/json');
         }
-    }
-
-
-    /**
-     * 有効なタイムスタンプかどうかを返す 
-     *
-     * @param mixed $timestamp タイムスタンプ
-     * @return boolean 有効なタイムスタンプかどうか
-     */
-    private function isValidTimeStamp($timestamp) {
-        // 0 以上で現在のタイムスタンプ以下の数値
-        return is_numeric($timestamp) and intval($timestamp) >= 0 and intval($timestamp) <= time();
     }
 }

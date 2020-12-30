@@ -38,6 +38,11 @@ class Kakolog extends Model
             return ['指定された実況 ID は存在しません。'];
         }
 
+        // 有効なタイムスタンプでない場合はエラー
+        if (!Kakolog::isValidTimeStamp($starttime) or !!Kakolog::isValidTimeStamp($endtime)) {
+            return ['開始時刻または終了時刻が不正です。'];
+        }
+
         // 取得開始時刻が取得終了時刻より大きい
         if ($starttime >= $endtime) {
             return ['指定された取得開始時刻は取得終了時刻よりも後です。'];
@@ -138,6 +143,18 @@ class Kakolog extends Model
     private static function getKakologFileName(string $jikkyo_id, DateTime $datetime): string
     {
         return "kakolog/{$jikkyo_id}/{$datetime->format('Y')}/{$datetime->format('Ymd')}.nicojk";
+    }
+
+
+    /**
+     * 有効なタイムスタンプかどうかを返す 
+     *
+     * @param mixed $timestamp タイムスタンプ
+     * @return boolean 有効なタイムスタンプかどうか
+     */
+    private static function isValidTimeStamp($timestamp) {
+        // 0 以上で現在のタイムスタンプ以下の数値
+        return is_numeric($timestamp) and intval($timestamp) >= 0 and intval($timestamp) <= time();
     }
 
 
