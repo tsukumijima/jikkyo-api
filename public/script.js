@@ -2,7 +2,7 @@
 $(function() {
 
     // 現在時刻
-    const date = moment().set('second', 0);
+    const date = moment().set('minute', 0).set('second', 0);
 
     // チャンネル
     let channel = 'jk1';
