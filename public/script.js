@@ -113,25 +113,42 @@ $(function() {
         return new Promise((resolve, reject) => {
         
             // API URL を構築
-            const api_url = `/api/kakolog/${channel}?starttime=${starttime.unix()}&endtime=${endtime.unix()}&format=xml`;
+            const api_url = `${window.location.origin}/api/kakolog/${channel}?starttime=${starttime.unix()}&endtime=${endtime.unix()}&format=xml`;
 
             // エラーが出ないか確認する
             $.ajax({
                 url: api_url.replace('xml', 'json'),
+            // リクエスト成功
             }).done((response, textStatus, jqXHR) => {
                 if (response.error) {  // エラーがあれば
                     // モーダルにエラーを表示
-                    $('#modal .modal-body').text(response.error);
+                    $('#modal .modal-body').html(response.error);
                     $('#modal').modal();
                     reject(response.error);
                 } else {
                     resolve(api_url);  // エラーなし
                 }
+            // リクエスト失敗
             }).fail((jqXHR, textStatus, errorThrown) => {
+                let error;
+                switch (jqXHR.status) {
+                    // 500 Internal Server Error
+                    case 500:
+                        error = 'サーバーエラーが発生しました。過去ログ API に不具合がある可能性があります。(HTTP Error 500)';
+                    break;
+                    // 503 Service Unavailable
+                    case 500:
+                        error = '現在、過去ログ API は一時的に利用できなくなっています。(HTTP Error 503)';
+                    break;
+                    // その他のステータスコード
+                    default:
+                        error = '不明なエラーが発生しました。';
+                    break;
+                }
                 // モーダルにエラーを表示
-                $('#modal .modal-body').text('不明なエラーが発生しました。');
+                $('#modal .modal-body').html(error + `<br>API URL: <a href="${api_url}" target="_blank">${api_url}</a>`);
                 $('#modal').modal();
-                reject('不明なエラーが発生しました。');
+                reject(error);
             });
         });
     }
