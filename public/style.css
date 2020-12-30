@@ -17,7 +17,14 @@ body {
     background-attachment: fixed;
     background-size: cover;
     line-height: 1.6;
-    margin-top: 82px;
+    padding-top: 82px;
+}
+body.modal-open {
+    padding-right: 0 !important;
+    overflow: auto !important;
+}
+body.modal-open nav {
+    padding: .5rem 1rem !important;
 }
 
 .nav-link i, .card-header i {

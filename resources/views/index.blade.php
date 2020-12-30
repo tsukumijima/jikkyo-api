@@ -70,7 +70,7 @@
 
   <nav id="navigation" class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
     <div class="container">
-      <a class="navbar-brand text-white" href="./">
+      <a class="navbar-brand text-white" href="#">
         <img src="{{ url('/') }}/logo.png" class="d-inline-block align-top">
         ニコニコ実況 過去ログ API
       </a>
@@ -187,8 +187,8 @@
             </div>
           </div>
           <div class="form-group mb-0 align-items-center justify-content-center">
-            <button id="download-button" type="button" class="btn btn-primary mr-2">コメントを XML でダウンロード</button>
-            <button id="urlopen-button" type="button" class="btn btn-secondary">コメントの API URL を開く</button>
+            <button id="download-button" type="button" class="btn btn-primary mr-3"><i class="fas fa-download mr-2"></i>コメントを XML でダウンロード</button>
+            <button id="urlopen-button" type="button" class="btn btn-secondary"><i class="fas fa-external-link-alt mr-2"></i>コメントの API URL を開く</button>
           </div>
         </div>
         <div class="modal fade" id="modal" tabindex="-1">
@@ -202,7 +202,7 @@
               </div>
               <div class="modal-body"></div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-2"></i>閉じる</button>
               </div>
             </div>
           </div>
