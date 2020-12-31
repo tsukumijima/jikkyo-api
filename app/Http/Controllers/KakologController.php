@@ -58,7 +58,7 @@ class KakologController extends Controller
         } else {
 
             // 必要なパラメータが存在しない
-            $message = Kakolog::errorMessage('必要なパラメーターが存在しません。', 'json');  // JSON 決め打ち
+            $message = Kakolog::errorMessage('必要なパラメータが存在しません。', 'json');  // JSON 決め打ち
             return response($message)->header('Content-Type', 'application/json');
         }
     }

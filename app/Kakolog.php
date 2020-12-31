@@ -40,7 +40,7 @@ class Kakolog extends Model
 
         // 有効なタイムスタンプでない場合はエラー
         if (!Kakolog::isValidTimeStamp($starttime) or !Kakolog::isValidTimeStamp($endtime)) {
-            return ['開始時刻または終了時刻が不正です。', false];
+            return ['取得開始時刻または取得終了時刻が不正です。', false];
         }
 
         // 取得開始時刻と取得終了時刻が同じ

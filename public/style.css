@@ -59,6 +59,10 @@ table.table-request tbody, table.table-response tbody {
     width: 100%;
 }
 
+table.table-response-error th {
+    width: 240px;
+}
+
 h2.card-header {
     font-size: 1rem;
 }
