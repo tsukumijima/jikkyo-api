@@ -152,7 +152,7 @@
           <div class="form-group">
             <div class="input-group date">
               <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-calendar mr-2"></i>日付</div>
+                <div class="input-group-text"><i class="fas fa-calendar-alt mr-2"></i>日付</div>
               </div>
               <input id="datepicker-start" type="text" class="form-control datetimepicker-input" placeholder="2020/12/15" data-toggle="datetimepicker">
               <div class="input-group-prepend">
@@ -177,7 +177,7 @@
           <div class="form-group mb-4">
             <div class="input-group date">
               <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fas fa-calendar mr-2"></i>日付</div>
+                <div class="input-group-text"><i class="fas fa-calendar-alt mr-2"></i>日付</div>
               </div>
               <input id="datepicker-end" type="text" class="form-control datetimepicker-input" placeholder="2020/12/15" data-toggle="datetimepicker">
               <div class="input-group-prepend">
@@ -242,28 +242,34 @@
         <ul class="mb-0">
           <li>2020 年 12 月 15 日までに投稿された旧ニコニコ実況の全ての過去ログを取得できます。</li>
           <ul>
-            <li>指定された期間の過去ログが存在しない場合（例: 2008 年 11 月 26 日よりも前の時刻）はエラーになります。</li>
+            <li>旧ニコニコ実況の過去ログデータは <a href="https://47.gigafile.nu/0214-h5003986d78e33dd116484423cfb5d981" target="_blank">Nekopanda 氏が配布されているもの</a> を利用しています。</li>
+            <ul>
+              <li>12 年分の全チャンネルの過去ログを完璧に集めていただき感謝します。</li>
+            </ul>
           </ul>
           <li>2020 年 12 月 16 以降に投稿された新ニコニコ実況の全ての過去ログを取得できます。</li>
           <ul>
-            <li>30 分に 1 回、当日分の全チャンネルの過去ログを自動で収集しています。</li>
+            <li>新ニコニコ実況の過去ログデータは自作の <a href="https://github.com/tsukumijima/JKCommentCrawler" target="_blank">JKCommentCrawler</a> を利用して収集しています。</li>
+            <li>30 分に 1 回、当日分の全チャンネルの過去ログを自動で収集します。</li>
             <ul>
               <li>その関係で、たとえば 17:15 に終わった番組の過去ログを直後の 17:20 に取得する、といったことはできません。</li>
-              <li>17:15 までの過去ログの収集が終わる 17:30 以降（実際は毎回の収集に 3 分ほどかかるため 17:34 以降）まで待つ必要があります。</li>
+              <li>17:00 ～ 17:30 の過去ログの収集が終わる 17:30 以降（実際は実行に 3 分ほどかかるため 17:34 以降）まで待つ必要があります。</li>
             </ul>
             <li>公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている BS11 以外の BS 各局 ( jk101・jk103・jk141・jk151・jk161・jk171・jk181・jk222 ) の過去ログも収集しています。</li>
             <li>コミュニティからの実況番組は 24 時間放送されているわけではないため、放送されていない時間帯のコメントは取得できません。</li>
+          </ul>
+          <li>指定された期間の過去ログが存在しない場合は空の packet が返されます。</li>
+          <ul>
+            <li>例えば 2008 年 11 月 26 日（ニコニコ実況のリリース日）よりも前の時刻や、現在時刻よりも未来の時刻などです。</li>
+            <li>上記以外にも、指定された日付のコメント自体は存在するが、時刻で絞り込むとその期間内にコメントが 1 件も投稿されていなかった、といった場合にも発生します（コメントの少ない早朝や昼間、BS チャンネルに多い）。</li>
+            <li>XML なら &lt;packet&gt;&lt;/packet&gt; 、JSON なら { "packet": [] } のようなレスポンスです。</li>
+            <li>エラーにはならないので、もし 1 件も過去ログを取得できなかった場合にエラーにしたい場合は、適宜クライアントソフト側で 1 件でもコメントを取得できているか確認するような実装にしてください。</li>
           </ul>
           <li>レスポンスの 文字コードは UTF-8（BOMなし）、改行コードは LF です。ツール等で利用する際は注意してください。</li>
           <li>3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。</li>
           <li>万全は期しているつもりですが、突貫工事で作ったため修正できていない不具合があるかもしれません。</li>
           <li>サーバーは 3 時と 15 時に再起動します。その関係で、再起動後 2 ～ 3 分は API にアクセスできなくなります。</li>
           <li>一個人が運営している非公式 API です。ニコニコ公式とは一切関係ありません。</li>
-          <li>旧ニコニコ実況の過去ログデータは <a href="https://47.gigafile.nu/0214-h5003986d78e33dd116484423cfb5d981" target="_blank">Nekopanda 氏が配布されているもの</a> を利用しています。</li>
-          <ul>
-            <li>12 年分の全チャンネルの過去ログを完璧に集めていただき感謝します。</li>
-          </ul>
-          <li>新ニコニコ実況の過去ログデータは自作の <a href="https://github.com/tsukumijima/JKCommentCrawler" target="_blank">JKCommentCrawler</a> を利用して収集しています。</li>
           <li>過去ログデータを除いたコードは <a href="https://github.com/tsukumijima/jikkyo-api" target="_blank">GitHub</a> にて公開しています。なにか不具合があれば <a href="https://github.com/tsukumijima/jikkyo-api/issues" target="_blank">Issues</a> へお願いします。</li>
           <ul>
             <li>未検証ですが、自分のサイトでこの API をホストすることも可能です。</li>

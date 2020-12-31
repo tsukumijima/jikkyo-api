@@ -34,7 +34,7 @@ class KakologController extends Controller
             // xml ヘッダはついていない
             list($kakolog_raw, $kakolog_result) = Kakolog::getKakolog($jikkyo_id, intval($starttime), intval($endtime));
 
-            // 指定された時間範囲の過去ログが存在しない
+            // 指定された期間の過去ログが存在しない
             if ($kakolog_result === false) {
                 $message = Kakolog::errorMessage($kakolog_raw, $format);
                 return response($message)->header('Content-Type', "application/{$format}");
