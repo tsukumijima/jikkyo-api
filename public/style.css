@@ -17,7 +17,7 @@ body {
     background-attachment: fixed;
     background-size: cover;
     line-height: 1.6;
-    padding-top: 82px;
+    margin-top: 82px;
 }
 body.modal-open {
     padding-right: 0 !important;
@@ -60,7 +60,7 @@ table.table-request tbody, table.table-response tbody {
 }
 
 table.table-response-error th {
-    width: 240px;
+    width: 270px;
 }
 
 h2.card-header {

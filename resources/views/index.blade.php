@@ -359,7 +359,7 @@
           <tr>
             <th class="thline">packet</th>
             <td class="tdline">
-              <div style="margin-bottom: 12px;">全てのコメントデータがくるまれている親要素</div>
+              <div style="margin-bottom: 12px;">全てのコメントデータがくるまれている親要素。</div>
               <table cellpadding="0" cellspacing="0" width="100%" class="tableline  table-response">
                 <tr>
                   <th class="title" nowrap>プロパティ名</th>
@@ -369,8 +369,8 @@
                   <th class="thline">chat</th>
                   <td class="tdline">
                     <div style="margin-bottom: 12px;">
-                      コメントデータ<br>
-                      過去ログをそのまま出力しているため、一部のコメントにしか存在しないプロパティもあります<br>
+                      コメントデータ。<br>
+                      取得した過去ログをそのまま出力しているため、一部のコメントにしか存在しないプロパティもあります。<br>
                     </div>
                     <table cellpadding="0" cellspacing="0" width="100%" class="tableline  table-response">
                       <tr>
@@ -431,15 +431,15 @@
           <tr>
             <th class="thline">error</th>
             <td class="tdline">
-              エラーメッセージ（エラー発生時のみ）　指定されたフォーマットに合わせて出力されますが、<br>
-              存在しないフォーマットが指定されたりパラメータが不足している場合には常に JSON 形式で出力されます<br>
+              エラーメッセージ（エラー発生時のみ）。指定されたフォーマットに合わせて出力されますが、<br>
+              存在しないフォーマットが指定されたりパラメータが不足している場合には常に JSON 形式で出力されます。<br>
             </td>
           </tr>
         </table>
           
         <table class="table table-response, table-response-error">
           <tr>
-            <th class="title" nowrap>エラー内容</th>
+            <th class="title" nowrap>エラーメッセージ</th>
             <th class="title">説明</th>
           </tr>
           <tr>
@@ -453,13 +453,14 @@
             <th>フォーマットは XML または JSON 形式である必要があります。</th>
             <td>
               リクエストパラメータに設定されたフォーマットが xml でも json でもない場合に発生します。<br>
+              常に JSON 形式で出力されます。<br>
             </td>
           </tr>
           <tr>
             <th>指定された実況 ID は存在しません。</th>
             <td>
               指定された実況 ID が存在しない場合に発生します。<br>
-              新ニコニコ実況では用意されていないラジオや BS の一部チャンネルを指定してもこのエラーにはなりません。<br>
+              過去一度も存在したことがない実況 ID のみが対象のため、新ニコニコ実況では用意されていないラジオや BS の一部チャンネルを指定した場合でもこのエラーは発生しません。<br>
             </td>
           </tr>
           <tr>
