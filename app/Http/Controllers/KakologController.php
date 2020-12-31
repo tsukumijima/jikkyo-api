@@ -26,16 +26,16 @@ class KakologController extends Controller
 
             // XML でも JSON でもない場合はエラー
             if ($format !== 'xml' and $format !== 'json') {
-                $message = Kakolog::errorMessage(['フォーマットは XML または JSON 形式である必要があります。'], 'json');  // JSON 決め打ち
+                $message = Kakolog::errorMessage('フォーマットは XML または JSON 形式である必要があります。', 'json');  // JSON 決め打ち
                 return response($message)->header('Content-Type', 'application/json');
             }
 
             // 生の過去ログを取得
             // xml ヘッダはついていない
-            $kakolog_raw = Kakolog::getKakolog($jikkyo_id, intval($starttime), intval($endtime));
+            list($kakolog_raw, $kakolog_result) = Kakolog::getKakolog($jikkyo_id, intval($starttime), intval($endtime));
 
             // 指定された時間範囲の過去ログが存在しない
-            if (is_array($kakolog_raw)) {
+            if ($kakolog_result === false) {
                 $message = Kakolog::errorMessage($kakolog_raw, $format);
                 return response($message)->header('Content-Type', "application/{$format}");
             }
@@ -58,7 +58,7 @@ class KakologController extends Controller
         } else {
 
             // 必要なパラメータが存在しない
-            $message = Kakolog::errorMessage(['必要なパラメーターが存在しません。'], 'json');  // JSON 決め打ち
+            $message = Kakolog::errorMessage('必要なパラメーターが存在しません。', 'json');  // JSON 決め打ち
             return response($message)->header('Content-Type', 'application/json');
         }
     }

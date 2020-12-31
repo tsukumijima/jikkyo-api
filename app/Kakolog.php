@@ -12,14 +12,14 @@ class Kakolog extends Model
     /**
      * 過去ログを取得する
      * 指定された開始時刻/終了時刻の xml ファイルがあれば生の過去ログデータを返す
-     * 指定された時間範囲の過去ログが存在しないなど取得できなかった場合はエラーメッセージの入った配列を返す
+     * 指定された時間範囲の過去ログが存在しないなど取得できなかった場合はエラーメッセージを返す
      *
      * @param string $jikkyo_id 実況ID (ex: jk211)
      * @param integer $starttime 取得を開始する時刻のタイムスタンプ
      * @param integer $endtime 取得を終了する時刻のタイムスタンプ
-     * @return string|array 生の過去ログデータ or エラーメッセージの入った配列
+     * @return array [生の過去ログデータ or エラーメッセージ, 取得できたかどうか]
      */
-    public static function getKakolog(string $jikkyo_id, int $starttime, int $endtime)
+    public static function getKakolog(string $jikkyo_id, int $starttime, int $endtime): array
     {
 
         // DateTime オブジェクトにする
@@ -35,33 +35,33 @@ class Kakolog extends Model
 
         // 指定された実況チャンネルが（過去を含め）存在しない
         if (!Storage::disk('local')->exists("kakolog/{$jikkyo_id}")) {
-            return ['指定された実況 ID は存在しません。'];
+            return ['指定された実況 ID は存在しません。', false];
         }
 
         // 有効なタイムスタンプでない場合はエラー
         if (!Kakolog::isValidTimeStamp($starttime) or !Kakolog::isValidTimeStamp($endtime)) {
-            return ['開始時刻または終了時刻が不正です。'];
+            return ['開始時刻または終了時刻が不正です。', false];
         }
 
         // 取得開始時刻と取得終了時刻が同じ
         if ($starttime === $endtime) {
-            return ['取得開始時刻と取得終了時刻が同じ時刻です。'];
+            return ['取得開始時刻と取得終了時刻が同じ時刻です。', false];
         }
 
         // 取得開始時刻が取得終了時刻より大きい
         if ($starttime >= $endtime) {
-            return ['指定された取得開始時刻は取得終了時刻よりも後です。'];
+            return ['指定された取得開始時刻は取得終了時刻よりも後です。', false];
         }
 
         // 取得開始/終了時刻どちらかの .nicojk ファイルが存在しない
         if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $startdate)) or
             !Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $enddate))) {
-            return ['指定された期間の過去ログは存在しません。'];
+            return ['指定された期間の過去ログは存在しません。', false];
         }
 
         // 取得開始時刻～取得終了時刻が3日間を超えている
         if (intval($startdate->diff($enddate)->format('%R%a')) > 3) {
-            return ['3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。'];
+            return ['3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。', false];
         }
 
         // 現在作業している日付
@@ -134,7 +134,7 @@ class Kakolog extends Model
         }
 
         // 生の過去ログデータを返す
-        return $kakolog;
+        return [$kakolog, true];
     }
 
 
@@ -167,25 +167,22 @@ class Kakolog extends Model
      * エラーメッセージを指定の形式でフォーマットして返す
      * 複数の要素がある場合は改行で連結する
      *
-     * @param array $message エラーメッセージ
+     * @param string $message エラーメッセージ
      * @param string $format フォーマット形式 (XML or JSON)
      * @return string フォーマットしたエラーメッセージ
      */
-    public static function errorMessage(array $message, string $format): string
+    public static function errorMessage(string $message, string $format): string
     {
-
-        // メッセージを結合
-        $message_concat = implode("\n", $message);
 
         // XML の場合
         if ($format === 'xml') {
             
-            return Kakolog::formatToXml("<error>{$message_concat}</error>");
+            return Kakolog::formatToXml("<error>{$message}</error>");
 
         // JSON の場合
         } else if ($format === 'json') {
 
-            $message_array = ['error' => $message_concat];
+            $message_array = ['error' => $message];
 
             // json_encode() で JSON にフォーマット
             // JSON_PRETTY_PRINT はローカル環境のみ（コメントデータが大量だとスペースや改行の分データが余計に増えて重くなる）
@@ -210,6 +207,9 @@ class Kakolog extends Model
         // XML のヘッダをつけてるだけなので Valid な XML かは微妙（たまに壊れてるのとかあるし）
         if (strpos($kakolog_raw, '<error>') !== false) {  // <error> が存在するか
             return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n{$kakolog_raw}";
+        // 取得したコメントが存在しない
+        } else if (trim($kakolog_raw) === '') {
+            return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<packet>\n</packet>";
         } else {
             return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<packet>\n{$kakolog_raw}\n</packet>";
         }
