@@ -8,10 +8,10 @@ $(function() {
     let channel = 'jk1';
 
     // 取得開始時刻
-    let starttime = date;
+    let starttime = moment().set('minute', 0).set('second', 0);
 
     // 取得終了時刻
-    let endtime = date;
+    let endtime = moment().set('minute', 0).set('second', 0);
 
     // 取得開始時刻の日付ピッカー
     $('#datepicker-start').datetimepicker({
