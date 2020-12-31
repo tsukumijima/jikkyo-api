@@ -29,10 +29,6 @@ class Kakolog extends Model
         $enddate = new DateTime();
         $enddate->setTimestamp($endtime);
 
-        // $startdate, $enddate は日付の比較用なので、時間:分:秒 の情報は削除して 00:00:00 に統一
-        $startdate->setTime(0, 0, 0);
-        $enddate->setTime(0, 0, 0);
-
         // 指定された実況チャンネルが（過去を含め）存在しない
         if (!Storage::disk('local')->exists("kakolog/{$jikkyo_id}")) {
             return ['指定された実況 ID は存在しません。', false];
@@ -53,16 +49,17 @@ class Kakolog extends Model
             return ['指定された取得開始時刻は取得終了時刻よりも後です。', false];
         }
 
-        // 取得開始/終了時刻どちらかの .nicojk ファイルが存在しない
-        if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $startdate)) or
-            !Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $enddate))) {
-            return ['指定された期間の過去ログは存在しません。', false];
-        }
-
         // 取得開始時刻～取得終了時刻が3日間を超えている
-        if (intval($startdate->diff($enddate)->format('%R%a')) > 3) {
+        // 3日間ぴったりだけ許可する
+        if (($startdate->diff($enddate)->days >= 3) and
+            !($startdate->diff($enddate)->days === 3 and $startdate->diff($enddate)->h === 0 and
+              $startdate->diff($enddate)->i === 0 and $startdate->diff($enddate)->s === 0)) {
             return ['3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。', false];
         }
+
+        // $startdate, $enddate は日付の比較用なので、時間:分:秒 の情報は削除して 00:00:00 に統一
+        $startdate->setTime(0, 0, 0);
+        $enddate->setTime(0, 0, 0);
 
         // 現在作業している日付
         $currentdate = $startdate;
@@ -72,6 +69,11 @@ class Kakolog extends Model
 
         // 終了時刻の日付になるまで日付を足し続ける
         for (; $currentdate->getTimeStamp() <= $endtime; $currentdate->modify('+1 days')) {
+
+            // .nicojk ファイルの存在確認
+            if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $currentdate))) {
+                continue;  // ファイルが存在しない場合は以降の処理をスキップ
+            }
 
             // 過去ログを取得（ trim() で両端の改行を除去しておく）
             $kakolog_file = trim(Storage::disk('local')->get(Kakolog::getKakologFileName($jikkyo_id, $currentdate)));

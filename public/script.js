@@ -126,7 +126,13 @@ $(function() {
                     $('#modal').modal();
                     reject(response.error);
                 } else {
-                    resolve(api_url);  // エラーなし
+                    if (response.packet.length === 0) {
+                        $('#modal .modal-body').html('指定された期間の過去ログは存在しません。');
+                        $('#modal').modal();
+                        reject('指定された期間の過去ログは存在しません。');
+                    } else {
+                        resolve(api_url);  // エラーなし
+                    }
                 }
             // リクエスト失敗
             }).fail((jqXHR, textStatus, errorThrown) => {
