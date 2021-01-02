@@ -143,7 +143,7 @@ $(function() {
                         error = 'サーバーエラーが発生しました。過去ログ API に不具合がある可能性があります。(HTTP Error 500)';
                     break;
                     // 503 Service Unavailable
-                    case 500:
+                    case 503:
                         error = '現在、過去ログ API は一時的に利用できなくなっています。(HTTP Error 503)';
                     break;
                     // その他のステータスコード
