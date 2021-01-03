@@ -135,7 +135,7 @@
                   <option value="jk8">jk8: フジテレビ</option>
                   <option value="jk9">jk9: TOKYO MX</option>
                 </optgroup>
-                <optgroup label="BS">
+                <optgroup label="BS・CS">
                   <option value="jk101">jk101: NHK BS1</option>
                   <option value="jk103">jk103: NHK BSプレミアム</option>
                   <option value="jk141">jk141: BS日テレ</option>
@@ -145,6 +145,7 @@
                   <option value="jk181">jk181: BSフジ</option>
                   <option value="jk211">jk211: BS11</option>
                   <option value="jk222">jk211: BS12 トゥエルビ</option>
+                  <option value="jk333">jk333: AT-X</option>
                 </optgroup>
               </select>
             </div>
