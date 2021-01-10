@@ -134,6 +134,8 @@
                   <option value="jk7">jk7: テレビ東京</option>
                   <option value="jk8">jk8: フジテレビ</option>
                   <option value="jk9">jk9: TOKYO MX</option>
+                  <option value="jk10">jk10: テレ玉</option>
+                  <option value="jk11">jk11: tvk</option>
                 </optgroup>
                 <optgroup label="BS・CS">
                   <option value="jk101">jk101: NHK BS1</option>
@@ -143,6 +145,9 @@
                   <option value="jk161">jk161: BS-TBS</option>
                   <option value="jk171">jk171: BSテレ東</option>
                   <option value="jk181">jk181: BSフジ</option>
+                  <option value="jk191">jk191: WOWOW PRIME</option>
+                  <option value="jk192">jk192: WOWOW LIVE</option>
+                  <option value="jk193">jk193: WOWOW CINEMA</option>
                   <option value="jk211">jk211: BS11</option>
                   <option value="jk222">jk211: BS12 トゥエルビ</option>
                   <option value="jk333">jk333: AT-X</option>
