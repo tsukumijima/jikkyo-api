@@ -133,7 +133,13 @@ class Kakolog extends Model
                 // そのまま追記
                 $kakolog = $kakolog . $kakolog_file;
             }
+
+            // 改行を追加
+            $kakolog = $kakolog . "\n";
         }
+
+        // 最初と最後にあるかもしれない改行を削除
+        $kakolog = trim($kakolog);
 
         // 生の過去ログデータを返す
         return [$kakolog, true];
