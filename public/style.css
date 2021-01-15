@@ -244,6 +244,38 @@ table > tbody > tr > th {
     font-size: 21px !important;
 }
 
+@media screen and (max-width: 500px) {
+    .download-form .input-group-text {
+        font-size: 13.5px !important;
+        padding: 0.2rem 0.5rem !important;
+    }
+
+    .download-form .input-group-text i {
+        font-size: 13px !important;
+    }
+    
+    .download-form select {
+        font-size: 13.5px !important;
+    }
+    
+    .download-form option {
+        font-size: 15px !important;
+    }
+    
+    .download-form input {
+        font-size: 17px !important;
+    }
+    
+    .download-form button {
+        font-size: 15px !important;
+        padding: 0.3rem 0.5rem !important;
+    }
+
+    .download-form .btn-group button {
+        font-size: 14px !important;
+    }
+}
+
 #footer {
     position: absolute;
     left: 0;
