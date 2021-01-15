@@ -1,14 +1,11 @@
 
 $(function() {
 
-    // 現在時刻
-    const date = moment().set('minute', 0).set('second', 0);
-
     // チャンネル
     let channel = 'jk1';
 
     // 取得開始時刻
-    let starttime = moment().set('minute', 0).set('second', 0);
+    let starttime = moment().add(-1, 'hour').set('minute', 0).set('second', 0);
 
     // 取得終了時刻
     let endtime = moment().set('minute', 0).set('second', 0);
@@ -18,8 +15,8 @@ $(function() {
         dayViewHeaderFormat: 'YYYY年MM月',
         format: 'YYYY/MM/DD',
         locale: 'ja',
-        defaultDate: date,
-        maxDate: date,
+        defaultDate: starttime,
+        maxDate: starttime,
     });
     
     // 取得開始時刻の時刻ピッカー
@@ -27,7 +24,7 @@ $(function() {
         dayViewHeaderFormat: 'HH:mm:ss',
         format: 'HH:mm:ss',
         locale: 'ja',
-        defaultDate: date,
+        defaultDate: starttime,
     });
 
     // 取得終了時刻の日付ピッカー
@@ -35,8 +32,8 @@ $(function() {
         dayViewHeaderFormat: 'YYYY年MM月',
         format: 'YYYY/MM/DD',
         locale: 'ja',
-        defaultDate: date,
-        maxDate: date,
+        defaultDate: endtime,
+        maxDate: endtime,
     });
     
     // 取得終了時刻の時刻ピッカー
@@ -44,7 +41,7 @@ $(function() {
         dayViewHeaderFormat: 'HH:mm:ss',
         format: 'HH:mm:ss',
         locale: 'ja',
-        defaultDate: date,
+        defaultDate: endtime,
     });
 
     // チャンネルのフォームが変化したとき
