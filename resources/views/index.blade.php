@@ -149,7 +149,7 @@
                   <option value="jk192">jk192: WOWOW LIVE</option>
                   <option value="jk193">jk193: WOWOW CINEMA</option>
                   <option value="jk211">jk211: BS11</option>
-                  <option value="jk222">jk211: BS12 トゥエルビ</option>
+                  <option value="jk222">jk222: BS12 トゥエルビ</option>
                   <option value="jk333">jk333: AT-X</option>
                 </optgroup>
               </select>
@@ -256,17 +256,17 @@
           <li>2020 年 12 月 16 以降に投稿された新ニコニコ実況の全ての過去ログを取得できます。</li>
           <ul>
             <li>新ニコニコ実況の過去ログデータは自作の <a href="https://github.com/tsukumijima/JKCommentCrawler" target="_blank">JKCommentCrawler</a> を利用して収集しています。</li>
-            <li><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている BS11 以外の BS・CS 各局 ( jk101・jk103・jk141・jk151・jk161・jk171・jk181・jk222・jk333 ) の過去ログも収集しています。</span></li>
+            <li><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている BS11 以外の BS・CS 各局 ( jk101・jk103・jk141・jk151・jk161・jk171・jk181・jk191・jk192・jk193・jk222・jk333 ) 、地デジ独立局 ( jk10・jk11 ) の過去ログも収集しています。</span></li>
             <li>30 分に 1 回、当日分の全チャンネルの過去ログを自動で収集します。</li>
             <ul>
               <li>その関係で、<span class="text-danger">たとえば 17:15 に終わった番組の過去ログを直後の 17:20 に取得する、といったことはできません。</span></li>
               <li>17:00 ～ 17:30 の過去ログの収集が終わる 17:30 以降（実際は実行に 3 分ほどかかるため 17:34 以降）まで待つ必要があります。</li>
               <li>コミュニティからの実況番組は 24 時間放送されているわけではないため、放送されていない時間帯のコメントは取得できません。</li>
             </ul>
-            <li><span class="text-danger">レスポンスには運営コメント（ /nicoad や /emotion のようなコマンド付きコメント）も含まれます。</span></li>
+            <li><span class="text-danger">レスポンスには運営コメント（ <code>/nicoad</code> や <code>/emotion</code> のようなコマンド付きコメント）も含まれます。</span></li>
             <ul>
               <li>運営コメントをレスポンスに含めるべきかかなり悩みましたが、元データの段階で運営コメントを取り除いてしまうと後から運営コメントが必要になっても手遅れになってしまうので、それよりかはいいかなーと判断しました。</li>
-              <li>このため、API を利用するクライアントソフト側で運営コメントを全て弾いたり、/nicoad からメッセージだけ取り出して固定コメントとして描画したり…といった実装が別途必要になります。</li>
+              <li>このため、API を利用するクライアントソフト側で運営コメントを全て弾いたり、<code>/nicoad</code> からメッセージだけ取り出して固定コメントとして描画したり…といった実装が別途必要になります。</li>
               <li>正規表現なら <code>/\/[a-z]+ /</code> で判定できると思います。</li>
             </ul>
           </ul>
