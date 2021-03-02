@@ -119,6 +119,14 @@ h2.card-header {
     }
 }
 
+@media (max-width: 1020px) {
+    .navbar-expand-md .navbar-nav .nav-link {
+        padding-right: .5rem;
+        padding-left: .5rem;
+        font-size: 13px;
+    }
+}
+
 @media (max-width: 961px) {
     .navbar-expand-md .navbar-nav .nav-link {
         padding-right: .7rem;
@@ -129,6 +137,7 @@ h2.card-header {
 @media (min-width: 768px) {
     .navbar-expand-md .navbar-toggler {
         display: block;
+        order: 1;
     }
     .navbar-expand-md .navbar-collapse {
         display: block !important;
@@ -273,6 +282,15 @@ table > tbody > tr > th {
 
     .download-form .btn-group button {
         font-size: 14px !important;
+    }
+
+    .action-button-group {
+        flex-direction: column;
+    }
+
+    .action-button-group #download-button {
+        margin-right: 0 !important;
+        margin-bottom: 12px;
     }
 }
 

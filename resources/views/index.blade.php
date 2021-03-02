@@ -77,7 +77,6 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
@@ -193,7 +192,7 @@
               <input id="timepicker-end" type="text" class="form-control datetimepicker-input" placeholder="08:00:00" data-toggle="datetimepicker">
             </div>
           </div>
-          <div class="form-group mb-0 align-items-center justify-content-center">
+          <div class="action-button-group form-group mb-0 align-items-center justify-content-center">
             <button id="download-button" type="button" class="btn btn-primary mr-3"><i class="fas fa-download mr-2"></i>コメントを XML でダウンロード</button>
             <button id="urlopen-button" type="button" class="btn btn-secondary"><i class="fas fa-external-link-alt mr-2"></i>コメントの API URL を開く</button>
           </div>
