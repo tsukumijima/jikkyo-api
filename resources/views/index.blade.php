@@ -126,7 +126,7 @@
               <select id="channel-picker" class="custom-select h-100">
                 <optgroup label="地デジ">
                   <option value="jk1">jk1: NHK総合</option>
-                  <option value="jk2">jk2: NHKEテレ </option>
+                  <option value="jk2">jk2: NHK Eテレ </option>
                   <option value="jk4">jk4: 日本テレビ</option>
                   <option value="jk5">jk5: テレビ朝日</option>
                   <option value="jk6">jk6: TBSテレビ</option>
@@ -135,6 +135,7 @@
                   <option value="jk9">jk9: TOKYO MX</option>
                   <option value="jk10">jk10: テレ玉</option>
                   <option value="jk11">jk11: tvk</option>
+                  <option value="jk12">jk12: チバテレビ</option>
                 </optgroup>
                 <optgroup label="BS・CS">
                   <option value="jk101">jk101: NHK BS1</option>
