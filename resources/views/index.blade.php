@@ -257,7 +257,7 @@
           <li>2020 年 12 月 16 以降に投稿された新ニコニコ実況の全ての過去ログを取得できます。</li>
           <ul>
             <li>新ニコニコ実況の過去ログデータは自作の <a href="https://github.com/tsukumijima/JKCommentCrawler" target="_blank">JKCommentCrawler</a> を利用して収集しています。</li>
-            <li><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている BS11 以外の BS・CS 各局 ( jk101・jk103・jk141・jk151・jk161・jk171・jk181・jk191・jk192・jk193・jk222・jk236・jk333 ) 、地デジ独立局 ( jk10・jk11 ) の過去ログも収集しています。</span></li>
+            <li><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている BS11 以外の BS・CS 各局 ( jk101・jk103・jk141・jk151・jk161・jk171・jk181・jk191・jk192・jk193・jk222・jk236・jk333 ) 、地デジ独立局 ( jk10・jk11・jk12 ) の過去ログも収集しています。</span></li>
             <li>15 分に 1 回、当日分の全チャンネルの過去ログを自動で収集します。</li>
             <ul>
               <li>その関係で、<span class="text-danger">たとえば 17:05 に終わった番組の過去ログを直後の 17:06 に取得する、といったことはできません。</span></li>
