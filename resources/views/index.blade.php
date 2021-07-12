@@ -257,7 +257,7 @@
           <li>2020 年 12 月 16 日以降に投稿された新ニコニコ実況の全ての過去ログを取得できます。</li>
           <ul>
             <li>新ニコニコ実況の過去ログデータは自作の <a href="https://github.com/tsukumijima/JKCommentCrawler" target="_blank">JKCommentCrawler</a> を利用して収集しています。</li>
-            <li><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている BS11 以外の BS・CS 各局 ( jk101・jk103・jk141・jk151・jk161・jk171・jk181・jk191・jk192・jk193・jk222・jk236・jk333 ) 、地デジ独立局 ( jk10・jk11・jk12 ) の過去ログも収集しています。</span></li>
+            <li><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk101・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている NHK BS1・BS11 以外の BS・CS 各局 ( jk103・jk141・jk151・jk161・jk171・jk181・jk191・jk192・jk193・jk222・jk236・jk333 ) 、地デジ独立局 ( jk10・jk11・jk12 ) の過去ログも収集しています。</span></li>
             <li>15 分に 1 回、当日分の全チャンネルの過去ログを自動で収集します。</li>
             <ul>
               <li>その関係で、<span class="text-danger">たとえば 17:05 に終わった番組の過去ログを直後の 17:06 に取得する、といったことはできません。</span></li>
@@ -303,7 +303,7 @@
             <span style="color:#d00;"><strong>{{ url('/') }}/api/kakolog/{実況ID}</strong></span><br>
             この URL に下の表のパラメータを加え、実際にリクエストします。
           </p>
-          
+
           <table class="table table-request">
             <tr>
               <th class="title" nowrap>パラメータ名</th>
@@ -337,7 +337,7 @@
               </td>
             </tr>
           </table>
-          
+
           <div class="column d-inline-block px-4 py-3" style="border: 1px solid #dee2e6; width: 100%;">
             <strong>（例）「 2020/11/27 08:00:00 ～ 2020/11/27 08:15:00 の NHK総合の XML 形式のコメント」を取得する場合</strong><br>
             <div>
@@ -363,7 +363,7 @@
         取得した XML・JSON データは以下の定義に基づいて構成されています。（プロパティ名は順不同）<br>
         文字コードは UTF-8（BOMなし）、改行コードは LF です。
       </p>
-  
+
         <table class="table table-response mt-4" cellpadding="0" cellspacing="0" class="normal">
           <tr>
             <th class="title" nowrap>プロパティ名</th>
@@ -449,7 +449,7 @@
             </td>
           </tr>
         </table>
-          
+
         <table class="table table-response, table-response-error">
           <tr>
             <th class="title" nowrap>エラーメッセージ</th>
@@ -510,7 +510,7 @@
     <div class="card">
       <h2 class="card-header font-weight-bold"><i class="fas fa-code"></i>XML データサンプル</h2>
       <div class="card-body p-sm-4">
-        
+
         <p class="mb-4">
           XML は指定された期間の過去ログをそのまま出力しているため、必ずしも Valid な XML であるとは限りません（まれに破損している場合がある）。<br>
         </p>
@@ -537,7 +537,7 @@
     <div class="card">
       <h2 class="card-header font-weight-bold"><i class="fas fa-code"></i>JSON データサンプル</h2>
       <div class="card-body p-sm-4">
-        
+
         <p class="mb-4">
           ASCII の範囲外の文字もエスケープされずに出力されます。<br>
           実際のレスポンスではサイズが大きくなってしまうため、下記のような改行やインデントは行われません。<br>
