@@ -5,7 +5,6 @@ namespace App\Models;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 
 class Kakolog extends Model
 {
@@ -27,11 +26,6 @@ class Kakolog extends Model
         $start_date->setTimestamp($start_time);
         $end_date = new DateTime();
         $end_date->setTimestamp($end_time);
-
-        // 指定された実況チャンネルが（過去を含め）存在しない
-        if (!Storage::disk('local')->exists("kakolog/{$jikkyo_id}")) {
-            return ['指定された実況 ID は存在しません。', false];
-        }
 
         // 有効なタイムスタンプでない場合はエラー
         if (!Kakolog::isValidTimeStamp($start_time) or !Kakolog::isValidTimeStamp($end_time)) {
@@ -69,13 +63,25 @@ class Kakolog extends Model
         // 終了時刻の日付になるまで日付を足し続ける
         for (; $current_date->getTimeStamp() <= $end_time; $current_date->modify('+1 days')) {
 
-            // .nicojk ファイルの存在確認
-            if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $current_date))) {
-                continue;  // ファイルが存在しない場合は以降の処理をスキップ
+            // GitHub から過去ログを取得
+            $kakolog_file_name = Kakolog::getKakologFileName($jikkyo_id, $current_date);
+            $kakolog_request = Http::get("https://raw.githubusercontent.com/KakologArchives/KakologArchives/master/${kakolog_file_name}");
+
+            // .nicojk ファイルの存在確認 (リクエストのステータスコードが 200 以外)
+            if ($kakolog_request->status() !== 200) {
+
+                // 指定された実況チャンネルが（過去を含め）存在しない場合はここでエラーにする
+                // 実況チャンネルが存在するならこの判定は不要なので、レスポンス高速化のために .nicojk ファイルが存在しなかった場合のみ判定する
+                if (Http::get("https://api.github.com/repos/KakologArchives/KakologArchives/contents/{$jikkyo_id}")->status() !== 200) {
+                    return ['指定された実況 ID は存在しません。', false];
+                }
+
+                // ファイルだけが存在しない場合は以降の処理をスキップ
+                continue;
             }
 
             // 過去ログを取得（ trim() で両端の改行を除去しておく）
-            $kakolog_file = trim(Storage::disk('local')->get(Kakolog::getKakologFileName($jikkyo_id, $current_date)));
+            $kakolog_file = trim($kakolog_request->body());
 
             // 開始/終了時刻の日付のみ
             if ($start_date->getTimeStamp() === $current_date->getTimeStamp() or
@@ -154,7 +160,7 @@ class Kakolog extends Model
      */
     private static function getKakologFileName(string $jikkyo_id, DateTime $datetime): string
     {
-        return "kakolog/{$jikkyo_id}/{$datetime->format('Y')}/{$datetime->format('Ymd')}.nicojk";
+        return "{$jikkyo_id}/{$datetime->format('Y')}/{$datetime->format('Ymd')}.nicojk";
     }
 
 
