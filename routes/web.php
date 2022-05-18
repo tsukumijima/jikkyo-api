@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers as Controllers;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,4 +18,4 @@ Route::get('/', function () {
 });
 
 // Kakolog
-Route::get('/api/kakolog/{jikkyo_id}', 'KakologController@index');
+Route::get('/api/kakolog/{jikkyo_id}', [Controllers\KakologController::class, 'index']);
