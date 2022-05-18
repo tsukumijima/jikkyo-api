@@ -65,19 +65,25 @@ class Kakolog extends Model
 
             // GitHub から過去ログを取得
             $kakolog_file_name = Kakolog::getKakologFileName($jikkyo_id, $current_date);
-            $kakolog_request = Http::get("https://raw.githubusercontent.com/KakologArchives/KakologArchives/master/${kakolog_file_name}");
+            $kakolog_request = Http::get("https://raw.githubusercontent.com/KakologArchives/KakologArchives/master/{$kakolog_file_name}");
 
-            // .nicojk ファイルの存在確認 (リクエストのステータスコードが 200 以外)
-            if ($kakolog_request->status() !== 200) {
+            // その日付の過去ログファイル (.nicojk) が存在しない
+            // GitHub 上でステータスコードが 404 であれば存在しないものとする
+            if ($kakolog_request->status() === 404) {
 
                 // 指定された実況チャンネルが（過去を含め）存在しない場合はここでエラーにする
-                // 実況チャンネルが存在するならこの判定は不要なので、レスポンス高速化のために .nicojk ファイルが存在しなかった場合のみ判定する
-                if (Http::get("https://api.github.com/repos/KakologArchives/KakologArchives/contents/{$jikkyo_id}")->status() !== 200) {
+                // 過去ログが存在するならこの判定は不要なので、レスポンス高速化のためにその日付の過去ログが存在しない場合のみ判定を行う
+                if (Http::get("https://api.github.com/repos/KakologArchives/KakologArchives/contents/{$jikkyo_id}")->status() === 404) {
                     return ['指定された実況 ID は存在しません。', false];
                 }
 
                 // ファイルだけが存在しない場合は以降の処理をスキップ
                 continue;
+
+            // 404 ではないが、200 (成功) でもない場合
+            // GitHub の障害が考えられるので、その旨を表示する
+            } else if ($kakolog_request->status() !== 200) {
+                return ["GitHub で障害が発生しているため、過去ログを取得できません。(HTTP Error {$kakolog_request->status()})", false];
             }
 
             // 過去ログを取得（ trim() で両端の改行を除去しておく）
