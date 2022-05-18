@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Kakolog;
 use Illuminate\Http\Request;
+use App\Models\Kakolog;
 
 class KakologController extends Controller
 {
@@ -21,8 +21,8 @@ class KakologController extends Controller
             $format = strtolower($request->input('format'));
 
             // 取得開始/終了時刻のタイムスタンプ
-            $starttime = $request->input('starttime');
-            $endtime = $request->input('endtime');
+            $start_time = $request->input('starttime');
+            $end_time = $request->input('endtime');
 
             // XML でも JSON でもない場合はエラー
             if ($format !== 'xml' and $format !== 'json') {
@@ -32,7 +32,7 @@ class KakologController extends Controller
 
             // 生の過去ログを取得
             // xml ヘッダはついていない
-            list($kakolog_raw, $kakolog_result) = Kakolog::getKakolog($jikkyo_id, intval($starttime), intval($endtime));
+            list($kakolog_raw, $kakolog_result) = Kakolog::getKakolog($jikkyo_id, intval($start_time), intval($end_time));
 
             // 指定された期間の過去ログが存在しない
             if ($kakolog_result === false) {

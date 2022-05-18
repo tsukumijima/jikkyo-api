@@ -1,9 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use DateTime;
-use SimpleXMLElement;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,22 +11,21 @@ class Kakolog extends Model
     /**
      * 過去ログを取得する
      * 指定された開始時刻/終了時刻の xml ファイルがあれば生の過去ログデータを返す
-     * 指定された期間の過去ログが存在しないなど取得できなかった場合はエラーメッセージを返す
+     * 指定された期間の過去ログが存在しないなど、取得できなかった場合はエラーメッセージを返す
      *
      * @param string $jikkyo_id 実況ID (ex: jk211)
-     * @param integer $starttime 取得を開始する時刻のタイムスタンプ
-     * @param integer $endtime 取得を終了する時刻のタイムスタンプ
+     * @param integer $start_time 取得を開始する時刻のタイムスタンプ
+     * @param integer $end_time 取得を終了する時刻のタイムスタンプ
      * @return array [生の過去ログデータ or エラーメッセージ, 取得できたかどうか]
      */
-    public static function getKakolog(string $jikkyo_id, int $starttime, int $endtime): array
+    public static function getKakolog(string $jikkyo_id, int $start_time, int $end_time): array
     {
-
         // DateTime オブジェクトにする
         // setTimestamp() を使わないとロケールが考慮されないらしい…？
-        $startdate = new DateTime();
-        $startdate->setTimestamp($starttime);
-        $enddate = new DateTime();
-        $enddate->setTimestamp($endtime);
+        $start_date = new DateTime();
+        $start_date->setTimestamp($start_time);
+        $end_date = new DateTime();
+        $end_date->setTimestamp($end_time);
 
         // 指定された実況チャンネルが（過去を含め）存在しない
         if (!Storage::disk('local')->exists("kakolog/{$jikkyo_id}")) {
@@ -35,59 +33,59 @@ class Kakolog extends Model
         }
 
         // 有効なタイムスタンプでない場合はエラー
-        if (!Kakolog::isValidTimeStamp($starttime) or !Kakolog::isValidTimeStamp($endtime)) {
+        if (!Kakolog::isValidTimeStamp($start_time) or !Kakolog::isValidTimeStamp($end_time)) {
             return ['取得開始時刻または取得終了時刻が不正です。', false];
         }
 
         // 取得開始時刻と取得終了時刻が同じ
-        if ($starttime === $endtime) {
+        if ($start_time === $end_time) {
             return ['取得開始時刻と取得終了時刻が同じ時刻です。', false];
         }
 
         // 取得開始時刻が取得終了時刻より大きい
-        if ($starttime >= $endtime) {
+        if ($start_time >= $end_time) {
             return ['指定された取得開始時刻は取得終了時刻よりも後です。', false];
         }
 
         // 取得開始時刻～取得終了時刻が3日間を超えている
         // 3日間ぴったりだけ許可する
-        if (($startdate->diff($enddate)->days >= 3) and
-            !($startdate->diff($enddate)->days === 3 and $startdate->diff($enddate)->h === 0 and
-              $startdate->diff($enddate)->i === 0 and $startdate->diff($enddate)->s === 0)) {
+        if (($start_date->diff($end_date)->days >= 3) and
+            !($start_date->diff($end_date)->days === 3 and $start_date->diff($end_date)->h === 0 and
+              $start_date->diff($end_date)->i === 0 and $start_date->diff($end_date)->s === 0)) {
             return ['3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。', false];
         }
 
-        // $startdate, $enddate は日付の比較用なので、時間:分:秒 の情報は削除して 00:00:00 に統一
-        $startdate->setTime(0, 0, 0);
-        $enddate->setTime(0, 0, 0);
+        // $start_date, $end_date は日付の比較用なので、時間:分:秒 の情報は削除して 00:00:00 に統一
+        $start_date->setTime(0, 0, 0);
+        $end_date->setTime(0, 0, 0);
 
         // 現在作業している日付
-        $currentdate = $startdate;
+        $current_date = $start_date;
 
         // 過去ログ、この文字列に足していく
         $kakolog = '';
 
         // 終了時刻の日付になるまで日付を足し続ける
-        for (; $currentdate->getTimeStamp() <= $endtime; $currentdate->modify('+1 days')) {
+        for (; $current_date->getTimeStamp() <= $end_time; $current_date->modify('+1 days')) {
 
             // .nicojk ファイルの存在確認
-            if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $currentdate))) {
+            if (!Storage::disk('local')->exists(Kakolog::getKakologFileName($jikkyo_id, $current_date))) {
                 continue;  // ファイルが存在しない場合は以降の処理をスキップ
             }
 
             // 過去ログを取得（ trim() で両端の改行を除去しておく）
-            $kakolog_file = trim(Storage::disk('local')->get(Kakolog::getKakologFileName($jikkyo_id, $currentdate)));
+            $kakolog_file = trim(Storage::disk('local')->get(Kakolog::getKakologFileName($jikkyo_id, $current_date)));
 
             // 開始/終了時刻の日付のみ
-            if ($startdate->getTimeStamp() === $currentdate->getTimeStamp() or
-                $enddate->getTimeStamp() === $currentdate->getTimeStamp()) {
+            if ($start_date->getTimeStamp() === $current_date->getTimeStamp() or
+                $end_date->getTimeStamp() === $current_date->getTimeStamp()) {
 
                 // コメントを <chat> 要素ごとに分割する（ \n で分割しないのはまれに複数行コメントが存在するため）
                 $kakolog_array = explode('</chat>', $kakolog_file);
 
-                // startdate よりも前のコメントを削除
+                // start_date よりも前のコメントを削除
                 foreach ($kakolog_array as $key => $value) {
-                    
+
                     // コメントのタイムスタンプを正規表現で抽出
                     preg_match('/date="([0-9]+?)"/s', $value, $matches);
 
@@ -101,15 +99,15 @@ class Kakolog extends Model
                     $timestamp = $matches[1];
 
                     // 開始時刻の日付のみ、開始時刻のタイムスタンプよりも小さいコメントを削除
-                    if ($startdate->getTimeStamp() === $currentdate->getTimeStamp()) {
-                        if ($timestamp < $starttime) {
+                    if ($start_date->getTimeStamp() === $current_date->getTimeStamp()) {
+                        if ($timestamp < $start_time) {
                             unset($kakolog_array[$key]);
                         }
                     }
 
                     // 終了時刻の日付のみ、終了時刻のタイムスタンプよりも大きいコメントを削除
-                    if ($enddate->getTimeStamp() === $currentdate->getTimeStamp()) {
-                        if ($timestamp > $endtime) {
+                    if ($end_date->getTimeStamp() === $current_date->getTimeStamp()) {
+                        if ($timestamp > $end_time) {
                             unset($kakolog_array[$key]);
                         }
                     }
@@ -160,7 +158,7 @@ class Kakolog extends Model
 
 
     /**
-     * 有効なタイムスタンプかどうかを返す 
+     * 有効なタイムスタンプかどうかを返す
      *
      * @param mixed $timestamp タイムスタンプ
      * @return boolean 有効なタイムスタンプかどうか
@@ -181,10 +179,9 @@ class Kakolog extends Model
      */
     public static function errorMessage(string $message, string $format): string
     {
-
         // XML の場合
         if ($format === 'xml') {
-            
+
             return Kakolog::formatToXml("<error>{$message}</error>");
 
         // JSON の場合
@@ -195,13 +192,13 @@ class Kakolog extends Model
             // json_encode() で JSON にフォーマット
             // JSON_PRETTY_PRINT はローカル環境のみ（コメントデータが大量だとスペースや改行の分データが余計に増えて重くなる）
             if (\App::isLocal()) {
-                return json_encode($message_array, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); 
+                return json_encode($message_array, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
             } else {
-                return json_encode($message_array, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); 
+                return json_encode($message_array, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             }
         }
     }
-    
+
 
     /**
      * 生の過去ログデータを XML にフォーマットする
@@ -211,7 +208,6 @@ class Kakolog extends Model
      */
     public static function formatToXml(string $kakolog_raw): string
     {
-
         // XML のヘッダをつけてるだけなので Valid な XML かは微妙（たまに壊れてるのとかあるし）
         if (strpos($kakolog_raw, '<error>') !== false) {  // <error> が存在するか
             return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n{$kakolog_raw}";
@@ -222,7 +218,7 @@ class Kakolog extends Model
             return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<packet>\n{$kakolog_raw}\n</packet>";
         }
     }
-    
+
 
     /**
      * 生の過去ログデータを JSON にフォーマットする
@@ -232,7 +228,6 @@ class Kakolog extends Model
      */
     public static function formatToJson(string $kakolog_raw): string
     {
-        
         // まずは XML に直す
         $kakolog_xml = Kakolog::formatToXml($kakolog_raw);
 
@@ -243,9 +238,9 @@ class Kakolog extends Model
         // json_encode() で JSON にフォーマット
         // JSON_PRETTY_PRINT はローカル環境のみ（コメントデータが大量だとスペースや改行の分データが余計に増えて重くなる）
         if (\App::isLocal()) {
-            return json_encode($kakolog_object, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); 
+            return json_encode($kakolog_object, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         } else {
-            return json_encode($kakolog_object, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); 
+            return json_encode($kakolog_object, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
     }
 }
