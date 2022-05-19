@@ -18,7 +18,7 @@ $(function() {
         defaultDate: starttime,
         maxDate: starttime,
     });
-    
+
     // 取得開始時刻の時刻ピッカー
     $('#timepicker-start').datetimepicker({
         dayViewHeaderFormat: 'HH:mm:ss',
@@ -35,7 +35,7 @@ $(function() {
         defaultDate: endtime,
         maxDate: endtime,
     });
-    
+
     // 取得終了時刻の時刻ピッカー
     $('#timepicker-end').datetimepicker({
         dayViewHeaderFormat: 'HH:mm:ss',
@@ -48,7 +48,7 @@ $(function() {
     $('#channel-picker').on('change', (event) => {
         channel = $('#channel-picker').val();
     });
-    
+
     // 取得開始時刻のフォームが変化したとき
     $('#datepicker-start, #timepicker-start').on('change.datetimepicker', (event) => {
         const datepicker_start = $('#datepicker-start').val();
@@ -56,7 +56,7 @@ $(function() {
         const datetimepicker_start = moment(`${datepicker_start} ${timepicker_start}`, 'YYYY/MM/DD HH:mm:ss');
         starttime = datetimepicker_start;
     });
-    
+
     // 取得終了時刻のフォームが変化したとき
     $('#datepicker-end, #timepicker-end').on('change.datetimepicker', (event) => {
         const datepicker_end = $('#datepicker-end').val();
@@ -108,7 +108,7 @@ $(function() {
 
         // Promise を返す
         return new Promise((resolve, reject) => {
-        
+
             // API URL を構築
             const api_url = `${window.location.origin}/api/kakolog/${channel}?starttime=${starttime.unix()}&endtime=${endtime.unix()}&format=xml`;
 
@@ -161,7 +161,7 @@ $(function() {
 
         // エラーがなければ
         checkAPI().then((api_url) => {
-    
+
             // 仮想の a 要素を作成してダウンロードさせる
             const link = document.createElement('a');
             link.href = api_url;
@@ -174,7 +174,6 @@ $(function() {
             // エラーをコンソールに表示
             console.error(`Error: ${error}`);
         });
-
     });
 
     // 遷移ボタンがクリックされたとき
@@ -192,7 +191,6 @@ $(function() {
             // エラーをコンソールに表示
             console.error(`Error: ${error}`);
         });
-
     });
 
 });
