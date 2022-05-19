@@ -17,7 +17,7 @@
 7. アクセスできるか確認する
 
 ## License
-[MIT License](LICENSE.txt)
+[MIT License](License.txt)
 
 
 ------------------
