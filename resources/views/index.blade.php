@@ -290,7 +290,7 @@
           <ul>
             <li>未検証ですが、自分のサイトでこの API をホストすることも可能です。</li>
           </ul>
-          <li>収集した過去ログデータは <a href="https://github.com/KakologArchives/KakologArchives" target="_blank">KakologArchives</a> (GitHub) にて公開しています。</li>
+          <li>5分おきに収集した過去ログデータは <a href="https://github.com/KakologArchives/KakologArchives" target="_blank">KakologArchives</a> (GitHub) にて公開しています。</li>
           <ul>
             <li>この API も KakologArchives リポジトリから過去ログデータを取得しています。</li>
             <li>以前はサーバーのローカルディスクに保存された過去ログデータを出力していましたが、サーバーのディスク容量を 170GB 近く消費することから自宅サーバーで運用せざるを得ず、安定性に問題を抱えていました。</li>
