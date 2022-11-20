@@ -7,14 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ニコニコ実況 過去ログ API</title>
   <link rel="icon" type="image/png" href="/logo.png">
-  <link rel="canonical" href="{{ env('APP_URL') }}/">
+  <link rel="canonical" href="{{ config('app.url') }}/">
 
   <!-- OGP -->
   <meta property="og:type" content="article">
   <meta property="description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta property="og:description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta property="og:title" content="ニコニコ実況 過去ログ API">
-  <meta property="og:image" content="{{ env('APP_URL') }}/logo.png">
+  <meta property="og:image" content="{{ config('app.url') }}/logo.png">
   <meta property="og:locale" content="ja_JP">
   <!-- /OGP -->
 
@@ -22,7 +22,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta name="twitter:title" content="ニコニコ実況 過去ログ API">
-  <meta name="twitter:image" content="{{ env('APP_URL') }}/logo.png">
+  <meta name="twitter:image" content="{{ config('app.url') }}/logo.png">
   <!-- /Twitter Card -->
 
   <!-- JavaScript -->
@@ -41,7 +41,7 @@
   <link rel="stylesheet" type="text/css" href="/style.css">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('APP_GTAG') }}"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.gtag') }}"></script>
   <script>
 
     window.dataLayer = window.dataLayer || [];
@@ -49,7 +49,7 @@
       dataLayer.push(arguments);
     }
     gtag('js', new Date());
-    gtag('config', '{{ env('APP_GTAG') }}');
+    gtag('config', '{{ config('app.gtag') }}');
 
     $(function(){
       $('a[href^="#"]').click(function(){
@@ -309,7 +309,7 @@
         <div>
           <p>
             データをリクエストする際のベースとなる URL は以下になります。<br>
-            <span style="color:#d00;"><strong>{{ env('APP_URL') }}/api/kakolog/{実況ID}</strong></span><br>
+            <span style="color:#d00;"><strong>{{ config('app.url') }}/api/kakolog/{実況ID}</strong></span><br>
             この URL に下の表のパラメータを加え、実際にリクエストします。
           </p>
 
@@ -354,8 +354,8 @@
               基本 URL + 2020/11/27 08:00:00 のタイムスタンプ + 2020/11/27 08:15:00 のタイムスタンプ + フォーマット (xml)<br>
               UNIX タイムスタンプの計算は <a href="https://tool.konisimple.net/date/unixtime" target="_blank">Unixtime相互変換ツール</a> のサイトが使いやすいです。
             </div>
-            <a style="margin-left: 30px;" href="{{ env('APP_URL') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml" target="_blank">
-              {{ env('APP_URL') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml
+            <a style="margin-left: 30px;" href="{{ config('app.url') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml" target="_blank">
+              {{ config('app.url') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml
             </a>
           </div>
         </div>
