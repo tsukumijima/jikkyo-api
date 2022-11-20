@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ニコニコ実況 過去ログ API</title>
-  <link rel="icon" type="image/png" href="{{ url('/') }}/logo.png">
+  <link rel="icon" type="image/png" href="/logo.png">
   <link rel="canonical" href="{{ env('APP_URL') }}/">
 
   <!-- OGP -->
@@ -14,7 +14,7 @@
   <meta property="description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta property="og:description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta property="og:title" content="ニコニコ実況 過去ログ API">
-  <meta property="og:image" content="{{ url('/') }}/logo.png">
+  <meta property="og:image" content="{{ env('APP_URL') }}/logo.png">
   <meta property="og:locale" content="ja_JP">
   <!-- /OGP -->
 
@@ -22,7 +22,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:description" content="ニコニコ実況の過去ログを XML や JSON データで返す非公式 API です。">
   <meta name="twitter:title" content="ニコニコ実況 過去ログ API">
-  <meta name="twitter:image" content="{{ url('/') }}/logo.png">
+  <meta name="twitter:image" content="{{ env('APP_URL') }}/logo.png">
   <!-- /Twitter Card -->
 
   <!-- JavaScript -->
@@ -31,14 +31,14 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment-with-locales.min.js"></script>
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
-  <script type="text/javascript" src="{{ url('/') }}/script.js"></script>
+  <script type="text/javascript" src="/script.js"></script>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
   <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css">
-  <link rel="stylesheet" type="text/css" href="{{ url('/') }}/style.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('APP_GTAG') }}"></script>
@@ -71,7 +71,7 @@
   <nav id="navigation" class="navbar navbar-expand-md navbar-dark bg-info fixed-top">
     <div class="container">
       <a class="navbar-brand text-white" href="#">
-        <img src="{{ url('/') }}/logo.png" class="d-inline-block align-top">
+        <img src="/logo.png" class="d-inline-block align-top">
         ニコニコ実況 過去ログ API
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false">
@@ -309,7 +309,7 @@
         <div>
           <p>
             データをリクエストする際のベースとなる URL は以下になります。<br>
-            <span style="color:#d00;"><strong>{{ url('/') }}/api/kakolog/{実況ID}</strong></span><br>
+            <span style="color:#d00;"><strong>{{ env('APP_URL') }}/api/kakolog/{実況ID}</strong></span><br>
             この URL に下の表のパラメータを加え、実際にリクエストします。
           </p>
 
@@ -354,8 +354,8 @@
               基本 URL + 2020/11/27 08:00:00 のタイムスタンプ + 2020/11/27 08:15:00 のタイムスタンプ + フォーマット (xml)<br>
               UNIX タイムスタンプの計算は <a href="https://tool.konisimple.net/date/unixtime" target="_blank">Unixtime相互変換ツール</a> のサイトが使いやすいです。
             </div>
-            <a style="margin-left: 30px;" href="{{ url('/') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml" target="_blank">
-              {{ url('/') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml
+            <a style="margin-left: 30px;" href="{{ env('APP_URL') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml" target="_blank">
+              {{ env('APP_URL') }}/api/kakolog/jk1?starttime=1606431600&endtime=1606432500&format=xml
             </a>
           </div>
         </div>
