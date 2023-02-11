@@ -60,16 +60,26 @@ class Kakolog extends Model
         // 過去ログ、この文字列に足していく
         $kakolog = '';
 
+        // GitHub から、最新コミットのコミット ID を取得する
+        // この ID を raw.githubusercontent.com の URL に付けることで、キャッシュを無効化できる
+        $latest_commit_id_response = Http::get('https://api.github.com/repos/KakologArchives/KakologArchives/commits/master');
+
+        // GitHub から最新コミットのコミット ID を取得できなかった場合
+        if ($latest_commit_id_response->status() !== 200) {
+            return ["GitHub で障害が発生しているため、過去ログを取得できません。(HTTP Error {$latest_commit_id_response->status()})", false];
+        }
+        $latest_commit_id = $latest_commit_id_response->json()['sha'];
+
         // 終了時刻の日付になるまで日付を足し続ける
         for (; $current_date->getTimeStamp() <= $end_time; $current_date->modify('+1 days')) {
 
             // GitHub から過去ログを取得
             $kakolog_file_name = Kakolog::getKakologFileName($jikkyo_id, $current_date);
-            $kakolog_request = Http::get("https://raw.githubusercontent.com/KakologArchives/KakologArchives/master/{$kakolog_file_name}");
+            $kakolog_response = Http::get("https://raw.githubusercontent.com/KakologArchives/KakologArchives/{$latest_commit_id}/{$kakolog_file_name}");
 
             // その日付の過去ログファイル (.nicojk) が存在しない
             // GitHub 上でステータスコードが 404 であれば存在しないものとする
-            if ($kakolog_request->status() === 404) {
+            if ($kakolog_response->status() === 404) {
 
                 // 指定された実況チャンネルが（過去を含め）存在しない場合はここでエラーにする
                 // 過去ログが存在するならこの判定は不要なので、レスポンス高速化のためにその日付の過去ログが存在しない場合のみ判定を行う
@@ -82,12 +92,12 @@ class Kakolog extends Model
 
             // 404 ではないが、200 (成功) でもない場合
             // GitHub の障害が考えられるので、その旨を表示する
-            } else if ($kakolog_request->status() !== 200) {
-                return ["GitHub で障害が発生しているため、過去ログを取得できません。(HTTP Error {$kakolog_request->status()})", false];
+            } else if ($kakolog_response->status() !== 200) {
+                return ["GitHub で障害が発生しているため、過去ログを取得できません。(HTTP Error {$kakolog_response->status()})", false];
             }
 
             // 過去ログを取得（ trim() で両端の改行を除去しておく）
-            $kakolog_file = trim($kakolog_request->body());
+            $kakolog_file = trim($kakolog_response->body());
 
             // 開始/終了時刻の日付のみ
             if ($start_date->getTimeStamp() === $current_date->getTimeStamp() or
