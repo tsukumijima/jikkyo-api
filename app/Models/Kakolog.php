@@ -60,22 +60,13 @@ class Kakolog extends Model
         // 過去ログ、この文字列に足していく
         $kakolog = '';
 
-        // GitHub から、最新コミットのコミット ID を取得する
-        // この ID を raw.githubusercontent.com の URL に付けることで、キャッシュを無効化できる
-        $latest_commit_id_response = Http::get('https://api.github.com/repos/KakologArchives/KakologArchives/commits/master');
-
-        // GitHub から最新コミットのコミット ID を取得できなかった場合
-        if ($latest_commit_id_response->status() !== 200) {
-            return ["GitHub で障害が発生しているため、過去ログを取得できません。(HTTP Error {$latest_commit_id_response->status()})", false];
-        }
-        $latest_commit_id = $latest_commit_id_response->json()['sha'];
-
         // 終了時刻の日付になるまで日付を足し続ける
         for (; $current_date->getTimeStamp() <= $end_time; $current_date->modify('+1 days')) {
 
             // GitHub から過去ログを取得
-            $kakolog_file_name = Kakolog::getKakologFileName($jikkyo_id, $current_date);
-            $kakolog_response = Http::get("https://raw.githubusercontent.com/KakologArchives/KakologArchives/{$latest_commit_id}/{$kakolog_file_name}");
+            // URL 中の @ は Git の HEAD を指すらしい (自動的に最新コミットの raw.githubusercontent.com にリダイレクトされる)
+            $kakolog_file_name = Kakolog::getKakologFilePath($jikkyo_id, $current_date);
+            $kakolog_response = Http::get("https://github.com/KakologArchives/KakologArchives/raw/@/{$kakolog_file_name}");
 
             // その日付の過去ログファイル (.nicojk) が存在しない
             // GitHub 上でステータスコードが 404 であれば存在しないものとする
@@ -168,13 +159,13 @@ class Kakolog extends Model
 
 
     /**
-     * 過去ログのファイル名を取得する
+     * 過去ログのファイルパスを取得する
      *
      * @param string $jikkyo_id 実況ID
      * @param DateTime $datetime DateTime オブジェクト
-     * @return string 過去ログのファイル名
+     * @return string 過去ログのファイルパス (例: jk1/2021/20210101.nicojk)
      */
-    private static function getKakologFileName(string $jikkyo_id, DateTime $datetime): string
+    private static function getKakologFilePath(string $jikkyo_id, DateTime $datetime): string
     {
         return "{$jikkyo_id}/{$datetime->format('Y')}/{$datetime->format('Ymd')}.nicojk";
     }
