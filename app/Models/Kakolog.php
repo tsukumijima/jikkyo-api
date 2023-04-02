@@ -65,8 +65,20 @@ class Kakolog extends Model
 
             // GitHub から過去ログを取得
             // URL 中の @ は Git の HEAD を指すらしい (自動的に最新コミットの raw.githubusercontent.com にリダイレクトされる)
+            // 3回までリトライする
             $kakolog_file_name = Kakolog::getKakologFilePath($jikkyo_id, $current_date);
-            $kakolog_response = Http::get("https://github.com/KakologArchives/KakologArchives/raw/@/{$kakolog_file_name}");
+            $kakolog_file_url = "https://github.com/KakologArchives/KakologArchives/raw/@/{$kakolog_file_name}";
+            $retry_count = 3;
+            while ($retry_count > 0) {
+                try {
+                    $kakolog_response = HTTP::withOptions(['verify' => false])->get($kakolog_file_url);
+                    break;
+                } catch (Illuminate\Http\Client\ConnectionException $e) {
+                    $retry_count--;
+                    if ($retry_count === 0) throw $e;  // 3回失敗したら例外を投げる
+                    sleep(1);  // 1秒待機
+                }
+            }
 
             // その日付の過去ログファイル (.nicojk) が存在しない
             // GitHub 上でステータスコードが 404 であれば存在しないものとする
