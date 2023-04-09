@@ -142,6 +142,9 @@ class Kakolog extends Model
                 // 一度配列に分割したコメントを implode() で文字列に戻す
                 $kakolog_implode = implode('</chat>', $kakolog_array).'</chat>';
 
+                // もし末尾が "/></chat>" になってしまった場合は、"/>" に置換する
+                $kakolog_implode = str_replace('/></chat>', '/>', $kakolog_implode);
+
                 // 内容が </chat> しかない（＝指定期間のコメントが存在しない）場合は空に設定
                 if ($kakolog_implode === '</chat>') {
                     $kakolog_implode = '';
