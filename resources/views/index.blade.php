@@ -290,11 +290,11 @@
           <ul>
             <li>未検証ですが、自分のサイトでこの API をホストすることも可能です。</li>
           </ul>
-          <li>5分おきに収集した過去ログデータは <a href="https://github.com/KakologArchives/KakologArchives" target="_blank">KakologArchives</a> (GitHub) にて公開しています。</li>
+          <li>5分おきに収集した過去ログデータは <a href="https://huggingface.co/datasets/KakologArchives/KakologArchives" target="_blank">KakologArchives</a> (Hugging Face) にて公開しています。</li>
           <ul>
             <li>この API も KakologArchives リポジトリから過去ログデータを取得しています。</li>
             <li>以前はサーバーのローカルディスクに保存された過去ログデータを出力していましたが、サーバーのディスク容量を 170GB 近く消費することから自宅サーバーで運用せざるを得ず、安定性に問題を抱えていました。</li>
-            <li>GitHub から過去ログデータを取得するように変更し、API サーバーを VPS に置けるようになったことで、以前よりも安定性が向上しています。</li>
+            <li>Hugging Face から過去ログデータを取得するように変更し、API サーバーをクラウドに置けるようになったことで、以前よりも安定性が向上しています。</li>
           </ul>
         </ul>
 
@@ -510,10 +510,10 @@
             </td>
           </tr>
           <tr>
-            <th>GitHub で障害が発生しているため、過去ログを取得できません。(HTTP Error xxx)</th>
+            <th>Hugging Face で障害が発生しているため、過去ログを取得できません。(HTTP Error xxx)</th>
             <td>
-              障害が発生しているなどの理由により、GitHub のサーバーにアクセスできなかったときに起きるエラーです。<br>
-              出力元の過去ログデータは GitHub から取得しているため、GitHub で障害が発生している間は過去ログを取得できません。<br>
+              障害が発生しているなどの理由により、Hugging Face のサーバーにアクセスできなかったときに起きるエラーです。<br>
+              出力元の過去ログデータは Hugging Face から取得しているため、Hugging Face で障害が発生している間は過去ログを取得できません。<br>
             </td>
           </tr>
         </table>

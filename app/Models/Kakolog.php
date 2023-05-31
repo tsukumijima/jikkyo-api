@@ -63,11 +63,10 @@ class Kakolog extends Model
         // 終了時刻の日付になるまで日付を足し続ける
         for (; $current_date->getTimeStamp() <= $end_time; $current_date->modify('+1 days')) {
 
-            // GitHub から過去ログを取得
-            // URL 中の @ は Git の HEAD を指すらしい (自動的に最新コミットの raw.githubusercontent.com にリダイレクトされる)
+            // Hugging Face から過去ログを取得
             // 3回までリトライする
             $kakolog_file_name = Kakolog::getKakologFilePath($jikkyo_id, $current_date);
-            $kakolog_file_url = "https://github.com/KakologArchives/KakologArchives/raw/@/{$kakolog_file_name}";
+            $kakolog_file_url = "https://huggingface.co/datasets/KakologArchives/KakologArchives/resolve/main/{$kakolog_file_name}";
             $retry_count = 3;
             while ($retry_count > 0) {
                 try {
@@ -81,12 +80,12 @@ class Kakolog extends Model
             }
 
             // その日付の過去ログファイル (.nicojk) が存在しない
-            // GitHub 上でステータスコードが 404 であれば存在しないものとする
+            // Hugging Face 上でステータスコードが 404 であれば存在しないものとする
             if ($kakolog_response->status() === 404) {
 
                 // 指定された実況チャンネルが（過去を含め）存在しない場合はここでエラーにする
                 // 過去ログが存在するならこの判定は不要なので、レスポンス高速化のためにその日付の過去ログが存在しない場合のみ判定を行う
-                if (Http::get("https://api.github.com/repos/KakologArchives/KakologArchives/contents/{$jikkyo_id}")->status() === 404) {
+                if (Http::get("https://huggingface.co/datasets/KakologArchives/KakologArchives/tree/main/{$jikkyo_id}")->status() === 404) {
                     return ['指定された実況 ID は存在しません。', false];
                 }
 
@@ -94,9 +93,9 @@ class Kakolog extends Model
                 continue;
 
             // 404 ではないが、200 (成功) でもない場合
-            // GitHub の障害が考えられるので、その旨を表示する
+            // Hugging Face の障害が考えられるので、その旨を表示する
             } else if ($kakolog_response->status() !== 200) {
-                return ["GitHub で障害が発生しているため、過去ログを取得できません。(HTTP Error {$kakolog_response->status()})", false];
+                return ["Hugging Face で障害が発生しているため、過去ログを取得できません。(HTTP Error {$kakolog_response->status()})", false];
             }
 
             // 過去ログを取得（ trim() で両端の改行を除去しておく）
