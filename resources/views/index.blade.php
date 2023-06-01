@@ -226,7 +226,7 @@
     <div class="card">
       <h2 class="card-header font-weight-bold"><i class="fas fa-info-circle"></i>About</h2>
       <div class="card-body p-sm-4">
-        <p>ニコニコ実況 過去ログ APIは、ニコニコ実況の過去ログを XML や JSON データで提供しています。</p>
+        <p>ニコニコ実況 過去ログ API は、ニコニコ実況の過去ログを XML や JSON データで提供しています。</p>
         <p>
           去る2020年12月、ニコニコ実況は<a href="https://blog.nicovideo.jp/niconews/143148.html" target="_blank">ニコニコ生放送内の一公式チャンネルとしてリニューアルされました。</a><br>これに伴い、2009年11月から運用されてきた旧システムは提供終了となり（事実上のサービス終了）、torne や BRAVIA などの家電への対応が軒並み終了する中、当時の生の声が詰まった約11年分の過去ログも同時に失われることとなってしまいました。
         </p>
