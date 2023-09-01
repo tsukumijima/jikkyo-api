@@ -64,17 +64,17 @@ class Kakolog extends Model
         for (; $current_date->getTimeStamp() <= $end_time; $current_date->modify('+1 days')) {
 
             // Hugging Face から過去ログを取得
-            // 3回までリトライする
+            // 5回までリトライする
             $kakolog_file_name = Kakolog::getKakologFilePath($jikkyo_id, $current_date);
             $kakolog_file_url = "https://huggingface.co/datasets/KakologArchives/KakologArchives/resolve/main/{$kakolog_file_name}";
-            $retry_count = 3;
+            $retry_count = 5;
             while ($retry_count > 0) {
                 try {
                     $kakolog_response = HTTP::withOptions(['verify' => false])->get($kakolog_file_url);
                     break;
-                } catch (Illuminate\Http\Client\ConnectionException $e) {
+                } catch (\Throwable $e) {
                     $retry_count--;
-                    if ($retry_count === 0) throw $e;  // 3回失敗したら例外を投げる
+                    if ($retry_count === 0) throw $e;  // 5回失敗したら例外を投げる
                     sleep(1);  // 1秒待機
                 }
             }
@@ -85,7 +85,19 @@ class Kakolog extends Model
 
                 // 指定された実況チャンネルが（過去を含め）存在しない場合はここでエラーにする
                 // 過去ログが存在するならこの判定は不要なので、レスポンス高速化のためにその日付の過去ログが存在しない場合のみ判定を行う
-                if (Http::get("https://huggingface.co/datasets/KakologArchives/KakologArchives/tree/main/{$jikkyo_id}")->status() === 404) {
+                $jikkyo_ch_exists_url = "https://huggingface.co/datasets/KakologArchives/KakologArchives/tree/main/{$jikkyo_id}";
+                $retry_count = 5;
+                while ($retry_count > 0) {
+                    try {
+                        $jikkyo_ch_exists_response = Http::withOptions(['verify' => false])->get($jikkyo_ch_exists_url);
+                        break;
+                    } catch (\Throwable $e) {
+                        $retry_count--;
+                        if ($retry_count === 0) throw $e;  // 5回失敗したら例外を投げる
+                        sleep(1);  // 1秒待機
+                    }
+                }
+                if ($jikkyo_ch_exists_response->status() === 404) {
                     return ['指定された実況 ID は存在しません。', false];
                 }
 
