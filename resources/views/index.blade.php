@@ -113,6 +113,15 @@
       </div>
     </div>
   </nav>
+  <div class="alert alert-warning mb-0" role="alert">
+    <div class="container px-0 px-sm-2-3">
+      <div class="mb-0">
+        <strong><a class="link" href="https://blog.nicovideo.jp/niconews/225099.html" target="_blank">サイバー攻撃で最低7月末まで鯖落ち中</a> のニコニコ実況に代わる、ニコニコ実況民のための避難所であり、<a class="link" href="https://github.com/tsukumijima/NX-Jikkyo/blob/master/server/app/routers/websocket.py" target="_blank">ニコニコ生放送互換の WebSocket API</a> を備えるコメントサーバー、<a href="https://nx-jikkyo.tsukumijima.net" target="_blank">NX-Jikkyo</a> を公開しました！！🎉🎊<br>
+        既に <a class="link" href="https://air.fem.jp/jkcommentviewer/" target="_blank">jkcommentviewer</a> / <a class="link" href="https://blog.tsukumijima.net/article/nx-jikkyo-released/#toc3" target="_blank">TVTest (NicoJK)</a> / <a class="link" href="https://github.com/tsukumijima/KonomiTV/releases/tag/v0.10.1" target="_blank">KonomiTV</a> など多くの実況関連ソフトの最新版にて対応していただいています！<br>
+        <a href="https://nx-jikkyo.tsukumijima.net" target="_blank">NX-Jikkyo</a> に投稿されたコメントは随時この過去ログ API で取得できるよう反映されていますので、ぜひ一時移住を…！！🙏🙏</strong>
+      </div>
+    </div>
+  </div>
 
   <div id="download" class="container mt-4 px-2 px-lg-3">
     <div class="card">
