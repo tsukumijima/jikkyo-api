@@ -454,17 +454,17 @@
                         <td class="tdline">匿名コメントであれば 1</td>
                       </tr>
                       <tr>
-                        <th class="thline">content</th>
-                        <td class="tdline">
-                          コメント本文（XML 形式では chat 要素自体の値）<br>
-                          AA など、まれに複数行コメントがあるので注意<br>
-                        </td>
-                      </tr>
-                      <tr>
                         <th class="thline">nx_jikkyo</th>
                         <td class="tdline">
                             NX-Jikkyo に投稿されたコメントであれば 1<br>
                             ニコニコ実況に投稿されたコメントでは省略される<br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="thline">content</th>
+                        <td class="tdline">
+                          コメント本文（XML 形式では chat 要素自体の値）<br>
+                          AA など、まれに複数行コメントがあるので注意<br>
                         </td>
                       </tr>
                     </table>
