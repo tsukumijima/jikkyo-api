@@ -285,6 +285,12 @@
               <li>正規表現なら <code>/\/[a-z]+ /</code> で判定できると思います。</li>
             </ul>
           </ul>
+          <li>2024年06月10日以降に投稿された <a href="https://nx-jikkyo.tsukumijima.net/" target="_blank">NX-Jikkyo</a> のすべての過去ログを取得できます。</li>
+          <ul>
+            <li>NX-Jikkyo は、<a class="link" href="https://blog.nicovideo.jp/niconews/225099.html" target="_blank">サイバー攻撃で 2024/06/08 から最低7月末まで鯖落ち中</a> のニコニコ実況に代わる、ニコニコ実況民のための避難所であり、<a class="link" href="https://github.com/tsukumijima/NX-Jikkyo/blob/master/server/app/routers/websocket.py" target="_blank">ニコニコ生放送互換の WebSocket API</a> を備えるコメントサーバーです。</li>
+            <li>ニコニコ全体のサーバーダウンの長期化が見込まれることから、「ニコニコ実況 過去ログ API」の運営者が12時間で突貫開発し、2024/06/10 から運営しています。</li>
+            <li>NX-Jikkyo のコメントデータは極力ニコ生準拠のフォーマットで保存されているほか、統合にあたり従来のニコニコ実況の過去ログ同様の XML に変換した上で保存しています。この過去ログ API からは、ニコニコ実況のコメントと全く同じように取得できます。</li>
+          </ul>
           <li><span class="text-danger">指定された期間の過去ログが存在しない場合は空の packet が返されます。</span></li>
           <ul>
             <li>たとえば 2009年11月26日（ニコニコ実況のリリース日）よりも前の時刻などです。また、新しく開局したチャンネルで、開局前の時刻を指定したときも同じく空の packet が返されます。</li>
@@ -350,7 +356,7 @@
             <tr>
               <th>format</th>
               <td>
-                出力するフォーマットを表します。xml（ XML 形式）または json（ JSON 形式）のいずれかを指定します。<br>
+                出力するフォーマットを表します。xml（XML 形式）または json（JSON 形式）のいずれかを指定します。<br>
                 XML 形式では過去ログをヘッダーをつけた上でそのまま出力します。<br>
                 JSON 形式では過去ログをニコニコ動画のコメント API のレスポンスと類似した形態の JSON 形式に変換して出力します。<br>
               </td>
@@ -452,6 +458,13 @@
                         <td class="tdline">
                           コメント本文（XML 形式では chat 要素自体の値）<br>
                           AA など、まれに複数行コメントがあるので注意<br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th class="thline">nx_jikkyo</th>
+                        <td class="tdline">
+                            NX-Jikkyo に投稿されたコメントであれば 1<br>
+                            ニコニコ実況に投稿されたコメントでは省略される<br>
                         </td>
                       </tr>
                     </table>
