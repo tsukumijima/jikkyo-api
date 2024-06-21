@@ -287,8 +287,8 @@
           </ul>
           <li>2024年06月10日以降に投稿された <a href="https://nx-jikkyo.tsukumijima.net/" target="_blank">NX-Jikkyo</a> のすべての過去ログを取得できます。</li>
           <ul>
-            <li>NX-Jikkyo は、<a class="link" href="https://blog.nicovideo.jp/niconews/225099.html" target="_blank">サイバー攻撃で 2024/06/08 から最低7月末まで鯖落ち中</a> のニコニコ実況に代わる、ニコニコ実況民のための避難所であり、<a class="link" href="https://github.com/tsukumijima/NX-Jikkyo/blob/master/server/app/routers/websocket.py" target="_blank">ニコニコ生放送互換の WebSocket API</a> を備えるコメントサーバーです。</li>
-            <li>ニコニコ全体のサーバーダウンの長期化が見込まれることから、「ニコニコ実況 過去ログ API」の運営者が12時間で突貫開発し、2024/06/10 から運営しています。</li>
+            <li>NX-Jikkyo は、<a class="link" href="https://blog.nicovideo.jp/niconews/225099.html" target="_blank">サイバー攻撃で2024年06月08日から最低7月末まで鯖落ち中</a> のニコニコ実況に代わる、ニコニコ実況民のための避難所であり、<a class="link" href="https://github.com/tsukumijima/NX-Jikkyo/blob/master/server/app/routers/websocket.py" target="_blank">ニコニコ生放送互換の WebSocket API</a> を備えるコメントサーバーです。</li>
+            <li>ニコニコ全体のサーバーダウンの長期化が見込まれることから、「ニコニコ実況 過去ログ API」の運営者が12時間で突貫開発し、2024年06月10日から運営しています。</li>
             <li>NX-Jikkyo のコメントデータは極力ニコ生準拠のフォーマットで保存されているほか、統合にあたり従来のニコニコ実況の過去ログ同様の XML に変換した上で保存しています。この過去ログ API からは、ニコニコ実況のコメントと全く同じように取得できます。</li>
           </ul>
           <li><span class="text-danger">指定された期間の過去ログが存在しない場合は空の packet が返されます。</span></li>
