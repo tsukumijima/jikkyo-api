@@ -156,6 +156,14 @@ $(function() {
         });
     }
 
+    // 過去ログ再生ボタンがクリックされたとき
+    $('#play-button').click((event) => {
+
+        // 新しいタブで過去ログ再生ページを開く
+        const url = `https://nx-jikkyo.tsukumijima.net/log/${channel}/${starttime.format('YYYYMMDDHHmmss')}-${endtime.format('YYYYMMDDHHmmss')}`;
+        window.open(url, '_blank');
+    });
+
     // ダウンロードボタンがクリックされたとき
     $('#download-button').click((event) => {
 

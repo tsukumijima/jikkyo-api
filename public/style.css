@@ -253,6 +253,11 @@ table > tbody > tr > th {
     font-size: 21px !important;
 }
 
+#play-button {
+    background-color: #e33157 !important;
+    border-color: #e33157 !important;
+}
+
 @media screen and (max-width: 500px) {
     .download-form .input-group-text {
         font-size: 13.5px !important;
@@ -262,19 +267,19 @@ table > tbody > tr > th {
     .download-form .input-group-text i {
         font-size: 13px !important;
     }
-    
+
     .download-form select {
         font-size: 13.5px !important;
     }
-    
+
     .download-form option {
         font-size: 15px !important;
     }
-    
+
     .download-form input {
         font-size: 17px !important;
     }
-    
+
     .download-form button {
         font-size: 15px !important;
         padding: 0.3rem 0.5rem !important;
@@ -288,6 +293,7 @@ table > tbody > tr > th {
         flex-direction: column;
     }
 
+    .action-button-group #play-button,
     .action-button-group #download-button {
         margin-right: 0 !important;
         margin-bottom: 12px;

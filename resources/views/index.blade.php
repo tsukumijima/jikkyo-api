@@ -147,7 +147,7 @@
                   <option value="jk12">jk12: チバテレビ</option>
                 </optgroup>
                 <optgroup label="BS・CS">
-                  <option value="jk101">jk101: NHK BS1</option>
+                  <option value="jk101">jk101: NHK BS</option>
                   <option value="jk103">jk103: NHK BSプレミアム</option>
                   <option value="jk141">jk141: BS日テレ</option>
                   <option value="jk151">jk151: BS朝日</option>
@@ -207,6 +207,7 @@
             </div>
           </div>
           <div class="action-button-group form-group mb-0 align-items-center justify-content-center">
+            <button id="play-button" type="button" class="btn btn-danger mr-3"><i class="fas fa-external-link-alt mr-2"></i>過去ログビューアで再生</button>
             <button id="download-button" type="button" class="btn btn-primary mr-3"><i class="fas fa-download mr-2"></i>コメントを XML でダウンロード</button>
             <button id="urlopen-button" type="button" class="btn btn-secondary"><i class="fas fa-external-link-alt mr-2"></i>コメントの API URL を開く</button>
           </div>
