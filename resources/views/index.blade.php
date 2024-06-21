@@ -456,7 +456,7 @@
                       <tr>
                         <th class="thline">nx_jikkyo</th>
                         <td class="tdline">
-                            NX-Jikkyo に投稿されたコメントであれば 1<br>
+                            NX-Jikkyo に投稿されたコメントであれば 1（過去ログ API 独自のフィールド）<br>
                             ニコニコ実況に投稿されたコメントでは省略される<br>
                         </td>
                       </tr>
