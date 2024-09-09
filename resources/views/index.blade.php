@@ -116,9 +116,10 @@
   <div class="alert alert-warning mb-0" role="alert">
     <div class="container px-0 px-sm-2-3">
       <div class="mb-0">
-        <strong><a class="link" href="https://blog.nicovideo.jp/niconews/225099.html" target="_blank">サイバー攻撃で最低7月末まで鯖落ち中</a> のニコニコ実況に代わる、ニコニコ実況民のための避難所であり、<a class="link" href="https://github.com/tsukumijima/NX-Jikkyo/blob/master/server/app/routers/websocket.py" target="_blank">ニコニコ生放送互換の WebSocket API</a> を備えるコメントサーバー、<a href="https://nx-jikkyo.tsukumijima.net" target="_blank">NX-Jikkyo</a> を公開しました！！🎉🎊<br>
-        既に <a class="link" href="https://air.fem.jp/jkcommentviewer/" target="_blank">jkcommentviewer</a> / <a class="link" href="https://blog.tsukumijima.net/article/nx-jikkyo-released/#toc3" target="_blank">TVTest (NicoJK)</a> / <a class="link" href="https://github.com/tsukumijima/KonomiTV/releases/tag/v0.10.1" target="_blank">KonomiTV</a> など多くの実況関連ソフトの最新版にて対応していただいています！<br>
-        <a href="https://nx-jikkyo.tsukumijima.net" target="_blank">NX-Jikkyo</a> に投稿されたコメントは随時この過去ログ API で取得できるよう反映されていますので、ぜひ一時移住を…！！🙏🙏</strong>
+        <strong>「ニコニコ実況の Web 版非公式コメントビューア」＋「公式にない実況チャンネルを補完するコメントサーバー」、<a href="https://nx-jikkyo.tsukumijima.net" target="_blank">NX-Jikkyo</a> を運営中です！！<br>
+        NX-Jikkyo から本家ニコニコ実況へコメントする機能を使えば、PC でもスマホでも使える軽量コメントビューアとして利用できます！<br>
+        既に <a class="link" href="https://air.fem.jp/jkcommentviewer/" target="_blank">jkcommentviewer</a> / <a class="link" href="https://github.com/xtne6f/NicoJK/releases" target="_blank">TVTest (NicoJK)</a> / <a class="link" href="https://github.com/tsukumijima/KonomiTV/releases" target="_blank">KonomiTV</a> など多くの実況関連ソフトの最新版にて対応していただいています！<br>
+        <a href="https://nx-jikkyo.tsukumijima.net" target="_blank">NX-Jikkyo</a> に投稿されたコメントは随時この過去ログ API で取得できるよう反映されていますので、ぜひ使ってみてください…！！🙏🙏</strong>
       </div>
     </div>
   </div>
@@ -145,6 +146,8 @@
                   <option value="jk10">jk10: テレ玉</option>
                   <option value="jk11">jk11: tvk</option>
                   <option value="jk12">jk12: チバテレビ</option>
+                  <option value="jk13">jk13: サンテレビ</option>
+                  <option value="jk14">jk14: KBS京都</option>
                 </optgroup>
                 <optgroup label="BS・CS">
                   <option value="jk101">jk101: NHK BS</option>
@@ -248,7 +251,8 @@
           一方、ニコニコ生放送内の一公式チャンネルとして移行した新ニコニコ実況では、タイムシフト（旧ニコニコ実況での過去ログに相当）の視聴期限は3週間までとなっているため、その期限を過ぎると過去ログは視聴できなくなってしまいます。また一般会員は事前にタイムシフト予約をしておく必要があるなど、以前のような利便性は失われています。
         </p>
         <p class="mb-0">
-          この API は、そうしたニコニコ実況の過去ログを取り巻く現状を改善すべく、Nekopanda 氏が配布されている旧ニコニコ実況の 2020/12/15 までのすべての過去ログに加え、コミュニティベースの番組も含めた新ニコニコ実況の当日分の過去ログを5分に1回収集し、取得したデータを XML 形式や JSON 形式で提供する、非公式の過去ログデータベース API です。</span><br>
+          私たちは、ニコニコ実況に投稿された日本のテレビ放送についてのコメントは、当時の世相や時代背景を端的に表す、歴史的価値のある資料だと考えています。<br>
+          この API は、ニコニコ実況のすべての過去ログを後世に残すべく、Nekopanda 氏が配布されていた旧ニコニコ実況の 2020/12/15 までのすべての過去ログに加え、コミュニティでの実況番組も含めた新ニコニコ実況、さらに 2024/06/10 からは実況用代替コメントサーバーである NX-Jikkyo の当日分の過去ログを5分に1回収集し、取得したデータを XML 形式や JSON 形式で提供する、非公式の過去ログデータベース API です。<br>
           比較的簡単に利用できるようにしているつもりですが、<span class="text-danger">いくつか注意事項もあります。</span>利用される際は下記の 機能・注意事項 をよく読んだ上でご利用ください。
         </p>
       </div>
@@ -261,47 +265,51 @@
       <div class="card-body p-sm-4">
 
         <ul class="mb-0">
-          <li>2020年12月15日までに投稿された旧ニコニコ実況のすべての過去ログを取得できます。</li>
+          <li>2020/12/15 までに投稿された旧ニコニコ実況のすべての過去ログを取得できます。</li>
           <ul>
-            <li>旧ニコニコ実況の過去ログデータは <a href="https://47.gigafile.nu/0214-h5003986d78e33dd116484423cfb5d981" target="_blank">Nekopanda 氏が配布されているもの（リンク切れ）</a> を利用しています。</li>
+            <li>旧ニコニコ実況の過去ログデータには <a href="https://47.gigafile.nu/0214-h5003986d78e33dd116484423cfb5d981" target="_blank">かつて Nekopanda 氏が配布されていたもの (リンク切れ)</a> を利用しています。</li>
             <ul>
               <li>11年分の全チャンネルの過去ログを完璧に集めていただき感謝します。</li>
             </ul>
           </ul>
-          <li>2020年12月16日以降に投稿された新ニコニコ実況のすべての過去ログを取得できます。</li>
+          <li>2020/12/16 以降に投稿された新ニコニコ実況のすべての過去ログを取得できます。</li>
           <ul>
             <li>新ニコニコ実況の過去ログデータは自作の <a href="https://github.com/tsukumijima/JKCommentCrawler" target="_blank">JKCommentCrawler</a> を利用して収集しています。</li>
-            <li><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk101・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている NHK BS1・BS11 以外の BS・CS 各局 ( jk103・jk141・jk151・jk161・jk171・jk181・jk191・jk192・jk193・jk222・jk236・jk252・jk260・jk263・jk265・jk333 ) 、地デジ独立局 ( jk10・jk11・jk12 ) の過去ログも収集しています。</span></li>
+            <li><s><span class="text-info">公式チャンネル ( jk1・jk2・jk4・jk5・jk6・jk7・jk8・jk9・jk101・jk211 ) の放送に加えて、公式では廃止され、現在は <a href="https://com.nicovideo.jp/community/co5117214" target="_blank">有志のコミュニティ</a> から放送されている NHK BS1・BS11 以外の BS・CS 各局 ( jk103・jk141・jk151・jk161・jk171・jk181・jk191・jk192・jk193・jk222・jk236・jk252・jk260・jk263・jk265・jk333 ) 、地デジ独立局 ( jk10・jk11・jk12 ) の過去ログも収集しています。</span></s></li>
+            <ul>
+              <li><a href="https://blog.nicovideo.jp/niconews/225559.html" target="_blank">ニコニコミュニティのサービス終了</a> にともない、今まで有志らのコミュニティで維持されてきたニコニコ実況チャンネルは、事実上 NX-Jikkyo 上に移行する形となっています。詳しく <a href="https://github.com/tsukumijima/JKCommentCrawler#%E3%81%84%E3%82%8F%E3%82%86%E3%82%8B%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%83%86%E3%82%A3%E5%AE%9F%E6%B3%81%E3%81%A8-nx-jikkyo-%E3%81%AE%E9%96%A2%E4%BF%82%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" target="_blank">こちらの記事</a> をご覧ください。</li>
+            </ul>
             <li>5分に1回、当日分の全チャンネルの過去ログを自動で収集します。</li>
             <ul>
               <li>収集は5分に1回のため、<span class="text-danger">たとえば 17:02 に終わった番組の過去ログを直後の 17:03 に取得する、といったことはできません。</span></li>
               <li>17:00 ～ 17:05 の過去ログの収集が終わる 17:05 以降（実際は収集に 3 分ほどかかるため 17:08 以降）まで待つ必要があります。</li>
-              <li>コミュニティベースの実況チャンネルでは必ずしも24時間放送されているわけではないため、そのコミュニティで番組が放送されていない時間帯のコメントは取得できません。</li>
             </ul>
             <li><span class="text-danger">レスポンスには運営コメント（ <code>/nicoad</code> や <code>/emotion</code> のようなコマンド付きコメント）も含まれます。</span></li>
             <ul>
               <li>運営コメントをレスポンスに含めるべきかかなり悩みましたが、元データの段階で運営コメントを取り除いてしまうと後から運営コメントが必要になっても手遅れになってしまうので、それよりかはいいかなーと判断しました。</li>
               <li>このため、API を利用するクライアントソフト側で運営コメントをすべて弾いたり、<code>/nicoad</code> からメッセージだけ取り出して固定コメントとして描画したり…といった実装が別途必要になります。</li>
               <li>正規表現なら <code>/\/[a-z]+ /</code> で判定できると思います。</li>
+              <li>メッセージサーバーの仕様が変更された 2024/08/05 以降の新ニコニコ実況では、コメント配信形式が Protocol Buffers で構造化された関係で、「運営コメント」という概念自体が廃止されています。(それ以前の過去ログには運営コメントが記録されているため、運営コメントの除外処理自体は今後も必要です。)</li>
             </ul>
           </ul>
-          <li>2024年06月10日以降に投稿された <a href="https://nx-jikkyo.tsukumijima.net/" target="_blank">NX-Jikkyo</a> のすべての過去ログを取得できます。</li>
+          <li>2024/06/10 以降に投稿された <a href="https://nx-jikkyo.tsukumijima.net/" target="_blank">NX-Jikkyo</a> のすべての過去ログを取得できます。</li>
           <ul>
-            <li>NX-Jikkyo は、<a class="link" href="https://blog.nicovideo.jp/niconews/225099.html" target="_blank">サイバー攻撃で2024年06月08日から最低7月末まで鯖落ち中</a> のニコニコ実況に代わる、ニコニコ実況民のための避難所であり、<a class="link" href="https://github.com/tsukumijima/NX-Jikkyo/blob/master/server/app/routers/websocket.py" target="_blank">ニコニコ生放送互換の WebSocket API</a> を備えるコメントサーバーです。</li>
-            <li>ニコニコ全体のサーバーダウンの長期化が見込まれることから、「ニコニコ実況 過去ログ API」の運営者が12時間で突貫開発し、2024年06月10日から運営しています。</li>
-            <li>NX-Jikkyo のコメントデータは極力ニコ生準拠のフォーマットで保存されているほか、統合にあたり従来のニコニコ実況の過去ログ同様の XML に変換した上で保存しています。この過去ログ API からは、ニコニコ実況のコメントと全く同じように取得できます。</li>
+            <li><span class="text-info">NX-Jikkyo は、<a class="link" href="https://blog.nicovideo.jp/niconews/225099.html" target="_blank">サイバー攻撃の影響で 2024/06/08 ~ 08/05 まで鯖落ちしていた</a> ニコニコ実況に代わる、ニコニコ実況民のための避難所であり、<a class="link" href="https://github.com/tsukumijima/NX-Jikkyo/blob/master/server/app/routers/websocket.py" target="_blank">ニコニコ生放送互換の WebSocket API</a> を備えるコメントサーバーです。</span></li>
+            <li>当時ニコニコ全体のサーバーダウンの長期化が見込まれたことから (実際完全復旧まで3ヶ月弱を要した) 「ニコニコ実況 過去ログ API」の運営者が突貫で開発し、2024/06/10 から運営しています。</li>
+            <li>ニコニコ実況が復旧した現在では、「ニコニコ実況の Web 版非公式コメントビューア」＋「公式にない実況チャンネルを補完するコメントサーバー」として運営を続けています。</li>
+            <li>NX-Jikkyo のコメントデータは極力ニコニコ生放送準拠のフォーマットで保存されているほか、統合にあたり従来のニコニコ実況の過去ログ同様の XML に変換した上で保存しています。この過去ログ API からは、ニコニコ実況のコメントと全く同じように取得できます。</li>
           </ul>
           <li><span class="text-danger">指定された期間の過去ログが存在しない場合は空の packet が返されます。</span></li>
           <ul>
-            <li>たとえば 2009年11月26日（ニコニコ実況のリリース日）よりも前の時刻などです。また、新しく開局したチャンネルで、開局前の時刻を指定したときも同じく空の packet が返されます。</li>
+            <li>たとえば 2009/11/26（ニコニコ実況のリリース日）よりも前の時刻などです。また、新しく開局したチャンネルで、開局前の時刻を指定したときも同じく空の packet が返されます。</li>
             <li>これ以外にも、指定された日付のコメント自体は存在するが、指定された時刻で絞り込むとその期間内にコメントが 1 件も投稿されていなかった、といった場合にも発生します（コメントの少ない早朝や昼間、BS チャンネルに多い）。</li>
             <li>具体的には、XML なら <code>&lt;packet&gt;&lt;/packet&gt;</code> 、JSON なら <code>{"packet": []}</code> のようなレスポンスになります。</li>
             <li>エラーにはならないので、もし 1 件も過去ログを取得できなかった場合にエラーにしたい場合は、適宜 API クライアント側で 1 件でもコメントを取得できているか確認するような実装にしてください。</li>
           </ul>
-          <li><span class="text-info">レスポンスの 文字コードは UTF-8（BOMなし）、改行コードは LF です。</span>ツール等で利用する際は注意してください。</li>
+          <li><span class="text-info">レスポンスの 文字コードは UTF-8 (BOM なし) 、改行コードは LF です。</span>ツール等で利用する際は注意してください。</li>
           <li>3日分を超えるコメントを一度に取得することはできません。数日分かに分けて取得するようにしてください。</li>
           <li>万全は期しているつもりですが、突貫工事で作ったため修正できていない不具合があるかもしれません。</li>
-          <li>一個人が運営している非公式 API です。ニコニコ公式とは一切関係ありません。</li>
+          <li><span class="text-danger">一個人が運営している非公式 API です。ニコニコ公式とは一切関係ありません。</span></li>
           <li>過去ログデータを除いたコードは <a href="https://github.com/tsukumijima/jikkyo-api" target="_blank">GitHub</a> にて公開しています。なにか不具合があれば <a href="https://github.com/tsukumijima/jikkyo-api/issues" target="_blank">Issues</a> へお願いします。</li>
           <ul>
             <li>未検証ですが、自分のサイトでこの API をホストすることも可能です。</li>
@@ -421,11 +429,14 @@
                       </tr>
                       <tr>
                         <th class="thline">no</th>
-                        <td class="tdline">コメント番号（コメ番）</td>
+                        <td class="tdline">
+                          コメント番号 (コメ番)　コメ番の単調増加や一意性は保証されていないため、<br>
+                          ソートには date + date_usec の利用を推奨
+                        </td>
                       </tr>
                       <tr>
                         <th class="thline">vpos</th>
-                        <td class="tdline">スレッド ID から起算したコメントの再生位置（1/100秒）</td>
+                        <td class="tdline">スレッド ID から起算したコメントの再生位置 (1/100秒)</td>
                       </tr>
                       <tr>
                         <th class="thline">date</th>
@@ -434,16 +445,20 @@
                       <tr>
                         <th class="thline">date_usec</th>
                         <td class="tdline">
-                          コメント投稿時間の小数点以下の時間　コメント投稿時間の正確なタイムスタンプは<br>
-                          date: 1606431600・date_usec: 257855 なら 1606431600.257855 のようになる</td>
+                          コメント投稿時間 UNIX タイムスタンプの小数点以下の時間 (マイクロ秒単位)<br>
+                          コメント投稿時間の正確なタイムスタンプは<br>
+                          date: 1606431600 / date_usec: 257855 なら 1606431600.257855 になる</td>
                       </tr>
                       <tr>
                         <th class="thline">user_id</th>
-                        <td class="tdline">ユーザー ID（コマンドに 184 が指定されている場合は匿名化される）</td>
+                        <td class="tdline">
+                          ユーザー ID (コマンドに 184 が指定されている場合は匿名化される)<br>
+                          NX-Jikkyo に投稿されたコメントのユーザー ID は必ず 35 文字以上になる
+                        </td>
                       </tr>
                       <tr>
                         <th class="thline">mail</th>
-                        <td class="tdline">コメントのコマンド（184, red naka big など）</td>
+                        <td class="tdline">コメントのコマンド (184, red naka big など)</td>
                       </tr>
                       <tr>
                         <th class="thline">premium</th>
@@ -456,14 +471,14 @@
                       <tr>
                         <th class="thline">nx_jikkyo</th>
                         <td class="tdline">
-                            NX-Jikkyo に投稿されたコメントであれば 1（過去ログ API 独自のフィールド）<br>
+                            NX-Jikkyo に投稿されたコメントであれば 1 (過去ログ API 独自のフィールド)<br>
                             ニコニコ実況に投稿されたコメントでは省略される<br>
                         </td>
                       </tr>
                       <tr>
                         <th class="thline">content</th>
                         <td class="tdline">
-                          コメント本文（XML 形式では chat 要素自体の値）<br>
+                          コメント本文 (XML 形式では chat 要素自体の値)<br>
                           AA など、まれに複数行コメントがあるので注意<br>
                         </td>
                       </tr>
