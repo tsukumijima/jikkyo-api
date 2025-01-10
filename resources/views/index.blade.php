@@ -160,6 +160,8 @@
                   <option value="jk191">jk191: WOWOW PRIME</option>
                   <option value="jk192">jk192: WOWOW LIVE</option>
                   <option value="jk193">jk193: WOWOW CINEMA</option>
+                  <option value="jk200">jk200: BS10</option>
+                  <option value="jk201">jk201: BS10スターチャンネル</option>
                   <option value="jk211">jk211: BS11</option>
                   <option value="jk222">jk222: BS12 トゥエルビ</option>
                   <option value="jk236">jk236: BSアニマックス</option>
