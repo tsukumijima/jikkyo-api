@@ -19,7 +19,7 @@ class JsonSerializer extends SimpleXmlElement implements JsonSerializable
      * @see JsonSerializable::jsonSerialize
      * @see https://stackoverflow.com/a/31276221/36175
      */
-    function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $array = [];
 

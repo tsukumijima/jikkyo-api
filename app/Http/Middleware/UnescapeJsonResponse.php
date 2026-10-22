@@ -3,24 +3,22 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
-class UnescapeJsonResponse
+final class UnescapeJsonResponse
 {
     /**
-     * Handle an incoming request.
+     * JSON レスポンスの日本語とスラッシュをそのまま出力する。
      * 参考: https://nextat.co.jp/staff/archives/203
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
 
-        // JSON以外はそのまま
-        if (!$response instanceof JsonResponse) {
+        // JSON 以外はそのまま返す
+        if (! $response instanceof JsonResponse) {
             return $response;
         }
 

@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 
-class Kakolog extends Model
+final class Kakolog
 {
     /**
      * 過去ログを取得する
